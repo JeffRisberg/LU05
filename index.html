@@ -1,0 +1,73 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title></title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+</head>
+<body>
+
+<script type="text/javascript">
+  // path to lib, src, resource
+  var L_ = "lib";
+  var S_ = "src";
+  var R_ = "resource";
+
+  var SCRIPTS = [
+    //lib
+    L_ + "/build/caat.js",
+    L_ + "/String.js",
+
+    L_ + "/CocoonJSExtensions/CocoonJS.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_App.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_App_ForCocoonJS.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_Ad.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_Social.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_SocialGaming.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_SocialGaming_Facebook.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_SocialGaming_GameCenter.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_Store.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_SocialGamingManager.js",
+    L_ + "/CocoonJSExtensions/CocoonJS_SocialGaming_LocalStorage.js",
+
+    // src
+    S_ + "/Control.js",
+    S_ + "/Util.js",
+    S_ + "/SceneMgr.js",
+    S_ + "/AudioMgr.js",
+    S_ + "/LocalStorageMgr.js",
+    S_ + "/UserPanel.js",
+    S_ + "/user/LockMgr.js",
+    S_ + "/user/Setting.js",
+    S_ + "/user/UserInfo.js",
+    S_ + "/user/UserLevel.js",
+    S_ + "/user/UserCharacter.js",
+    S_ + "/user/UserEquip.js",
+    S_ + "/scenes/SceneInitial.js",
+    S_ + "/scenes/SceneProfile.js",
+    S_ + "/scenes/SceneShop.js",
+    S_ + "/scenes/SceneLoad.js",
+    S_ + "/scenes/SceneGame.js",
+    S_ + "/containerScenes/ConLeaderboard.js",
+    S_ + "/containerScenes/ConDifficulty.js",
+    S_ + "/containerScenes/ConAchievement.js",
+    S_ + "/containerScenes/ConScore.js",
+    S_ + "/containerScenes/ConShop.js",
+    S_ + "/tools/LockActor.js",
+    S_ + "/tools/PopUp.js",
+    S_ + "/tools/ProgressBar.js",
+    S_ + "/tools/Slider.js",
+    S_ + "/tools/WrapFont.js",
+    S_ + "/tools/Touchy.js",
+    S_ + "/main.js"
+  ];
+
+  for (var i = 0; i < SCRIPTS.length; i++) {
+    var s = document.createElement("script");
+    s.async = false;
+    s.src = SCRIPTS[i];
+    document.head.appendChild(s);
+  }
+</script>
+</body>
+</html>
