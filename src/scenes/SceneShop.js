@@ -18,7 +18,7 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
   var userCharacter = that.userInfo.character;
 
   // top left
-  var btnBack = that.createButtonConSwitchScene("btnBack", "sceneEpisodeList", 10 * sf, 10 * sf, RBS_, RBS_);
+  var btnBack = that.createButtonConSwitchScene("btnBack", "sceneInitial", 10 * sf, 10 * sf, RBS_, RBS_);
   scene.addChild(btnBack);
 
   function beforeButtonDo() {
