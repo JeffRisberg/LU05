@@ -27,33 +27,6 @@ function UserInfo(director) {
   this.init();
 }
 
-UserInfo.prototype.resetAll = function() {
-
-  if (this.facebookInfo.isLoggedIn()) {
-    // only when facebook logged in
-    var nameInfo = this.facebookInfo.getFacebookInfo();
-    var userId = nameInfo.facebookId;
-
-    // process other facebook info
-    this.userId = userId;
-    this.userName = nameInfo.facebookName;
-
-    this.resetTopUser(this.userId);
-  } else {
-    this.resetTopUser(this.userName);
-  }
-
-  return true;
-};
-
-UserInfo.prototype.resetTopUser = function(userName) {
-
-  this.storeId = userName;
-  // process other attributes
-  this.initOthers();
-  this.lock.initAllGroupSt(this.isUserLoggedIn());
-
-};
 
 // This could be deleted. (08/07/2013)
 UserInfo.prototype.isUserChanged = function(userNameNew) {
@@ -84,45 +57,12 @@ UserInfo.prototype.initOthers = function() {
 
 };
 
-UserInfo.prototype.resetOthers = function() {
-
-  // start to reset
-  this.level.resetLevel();
-  this.money.resetMoney();
-  this.lock.resetStorage();
-  this.score.resetValue();
-  this.equip.resetEquip();
-
-  this.setting.resetAllSetting();
-  this.achievement.resetAllGroup();
-  this.license.resetLicense();
-  this.misc.resetMisc();
-  this.character.resetCharacter();
-};
-
-UserInfo.prototype.isUserLoggedIn = function() {
-  if (this.facebookInfo.isLoggedIn() != this.isLoggedIn) {
-    //console.log("Login status not same: recorded: ", this.isLoggedIn);
-  }
-  return this.isLoggedIn;
-};
-
-
-UserInfo.prototype.logout = function() {
-  this.facebookInfo.logout();
-  this.init();
-};
-
-UserInfo.prototype.init = function() {
+ UserInfo.prototype.init = function() {
   this.isLoggedIn = false;
   this.userName = "Africa Swinger";
+
 };
 
-UserInfo.prototype.login = function(userName) {
-  this.isLoggedIn = true;
-  this.userName = userName;
-  this.resetTopUser(userName);
-};
 
 UserInfo.prototype.getUserName = function() {
   return this.userName;

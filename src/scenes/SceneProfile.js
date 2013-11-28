@@ -53,6 +53,9 @@ SceneMgr.prototype.addSceneProfile = function (sceneName) {
   conVerticalMaterial.setBounds(160 * sf, 100 * sf, conVerticalMaterial.width, conVerticalMaterial.height);
   scene.addChild(conVerticalMaterial);
 
+    var btnSetting = that.createButtonConPopCon("btnSetting", that.conSettings, scene, 0, 0, RBS_, RBS_);
+    btnSetting.setLocation(10 * sf, H_ - btnSetting.height - 10 * sf);
+    scene.addChild(btnSetting);
 
   /**
    * This is called by the CAAT when the scene becomes the current scene

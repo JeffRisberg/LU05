@@ -1,5 +1,7 @@
 // scene manager class
 function SceneMgr(director) {
+
+  var episodeInfo_;  // store all episodes in hash
   this.director = director;
 
   this.sceneNameToIndex = {};
@@ -13,6 +15,27 @@ function SceneMgr(director) {
   init();
 
   function init() {
+
+      var songList = {}
+      var song1 = {"bg": "sky",
+          "bgImg": "africa",
+          "length": 63,
+          "songTitle": "Fluffing a Duck",
+          "author": "Music by Kevin MacLeod"};
+
+      var song2 = { "bg": "forestNight",
+          "bgImg": "forest",
+          "length": 35,
+          "songTitle": "Jingle Bell",
+          "price": 3,
+          "author": "Music by Kevin MacLeod"
+
+      };
+
+      songList.FluffingADuck = song1;
+      songList.JingleBell = song2;
+
+      episodeInfo_ = songList;
     // User init to default
     that.sceneResetUserToDefault();
   }
