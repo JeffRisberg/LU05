@@ -7,7 +7,7 @@
   function createScenes(sceneMgr) {
     sceneMgr.addSceneInitial("sceneInitial");
     sceneMgr.addSceneProfile("sceneProfile");
-    sceneMgr.addSceneLoad("sceneLoad");
+    sceneMgr.addScenePlay("scenePlay");
     sceneMgr.addSceneShop("sceneShop");
 
     sceneMgr.director.switchToNextScene(500, true, false);
@@ -17,10 +17,14 @@
     {id: "general", url: R_ + "/images/general.png"},
     {id: "buttons", url: R_ + "/images/buttons.png"},
     {id: "pause", url: R_ + "/images/pause.png"},
+    {id: "carrot", url: R_ + "/images/carrot.png"},
     {id: "btnBack", url: R_ + "/images/btnBack.png"},
     {id: "btnProfile", url: R_ + "/images/btnProfile.png"},
     {id: "btnPlay", url: R_ + "/images/btnPlay.png"},
     {id: "btnShop", url: R_ + "/images/btnShop.png"},
+    {id: "btnLeft", url: R_ + "/images/btnLeft.png"},
+    {id: "btnRight", url: R_ + "/images/btnRight.png"},
+    {id: "checkMark", url: R_ + "/images/checkMark.png"},
     {id: "containerBg", url: R_ + "/images/containerBg.png"},
 
     {id: "scnInitialBg", url: R_ + "/images/scnInitial/bg.png"},
@@ -38,7 +42,37 @@
     {id: "scnProfileTitle", url: R_ + "/images/scnProfile/title.png"},
     {id: "pointsImg", url: R_ + "/images/scnProfile/points.png"},
     {id: "progressBarCt", url: R_ + "/images/scnProfile/progressBarCt.png"},
-    {id: "progressBarBg", url: R_ + "/images/scnProfile/progressBarBg.png"}
+    {id: "progressBarBg", url: R_ + "/images/scnProfile/progressBarBg.png"},
+
+    // image for shop
+    {id: "btnSelect", url: R_ + "/images/scnShop/btnSelect.png"},
+    {id: "buyBtn", url: R_ + "/images/scnShop/buyBtn.png"},
+    {id: "equipBtn", url: R_ + "/images/scnShop/equipBtn.png"},
+    {id: "unequipBtn", url: R_ + "/images/scnShop/unequipBtn.png"},
+    {id: "btnMoreGem", url: R_ + "/images/scnShop/btnMoreGem.png"},
+    {id: "locked", url: R_ + "/images/scnShop/lock.png"},
+    {id: "locked2", url: R_ + "/images/scnShop/lock2.png"},
+
+    {id: "talentBox", url: R_ + "/images/scnShop/talentBox.png"},
+    {id: "itemBox", url: R_ + "/images/scnShop/itemBox.png"},
+
+    {id: "talentMoney", url: R_ + "/images/scnShop/talentMoney.png"},
+    {id: "talentAcc", url: R_ + "/images/scnShop/talentAcc.png"},
+    {id: "talentExp", url: R_ + "/images/scnShop/talentExp.png"},
+    {id: "talentScore", url: R_ + "/images/scnShop/talentScore.png"},
+    {id: "talentMoneyOff", url: R_ + "/images/scnShop/talentMoneyOff.png"},
+    {id: "talentAccOff", url: R_ + "/images/scnShop/talentAccOff.png"},
+    {id: "talentExpOff", url: R_ + "/images/scnShop/talentExpOff.png"},
+    {id: "talentScoreOff", url: R_ + "/images/scnShop/talentScoreOff.png"},
+
+    {id: "itemAcc", url: R_ + "/images/scnShop/itemAcc.png"},
+    {id: "itemFullBlood", url: R_ + "/images/scnShop/itemFullBlood.png"},
+    {id: "itemRecoverDuration", url: R_ + "/images/scnShop/itemRecoverDuration.png"},
+    {id: "itemShield", url: R_ + "/images/scnShop/itemShield.png"},
+    {id: "itemCombo", url: R_ + "/images/scnShop/itemCombo.png"},
+    {id: "itemScoreDouble", url: R_ + "/images/scnShop/itemScoreDouble.png"},
+    {id: "itemPass100", url: R_ + "/images/scnShop/itemPass100.png"},
+
   ];
 
   function createLoadingScene(director, loadingImages) {

@@ -6,6 +6,7 @@
 
 function UserEquip(lockMgr_) {
   var that = this;
+
   var talentGroup_ = [
     {
       image: "talentExp",
@@ -66,7 +67,6 @@ function UserEquip(lockMgr_) {
       }
     }
   ];
-
 
   var itemGroup_ = [
     {

@@ -1,13 +1,8 @@
 /**
- * Created with JetBrains WebStorm.
- * User: Linghua
- * Date: 3/4/13
- * Time: 11:41 PM
- * To change this template use File | Settings | File Templates.
+ * Metadata for settings mgt
  */
-
-function Setting() {
-  // default value
+function Settings() {
+  // default values
   var groupDefaultArray_ = [
     {
       name: "Sound",
@@ -46,40 +41,38 @@ function Setting() {
     }
   ];
 
-  // hash not garantee order
+  // hash not guarantee order
   var groupDefaultHash_ = Util.createHashFromArray(groupDefaultArray_, "name");
 
-  this.getValue = function(group) {
+  this.getValue = function (group) {
     if (!groupDefaultHash_.hasOwnProperty(group)) {
       console.error(group + " not in setting");
       return 0;
     }
-    var value = localStorage.getItem(this.prefix+"_"+group);
+    var value = localStorage.getItem(this.prefix + "_" + group);
     if (!value) {
       return groupDefaultHash_[group].defaultValue;
     }
     return parseInt(value);
   };
 
-  this.resetAllSetting = function() {
+  this.setValue = function (value, item) {
+    item = item || "";
+    if (DEBUG_.userAtt) {
+      console.log("set " + " : " + value);
+    }
+    localStorage.setItem(this.prefix + "_" + item, value);
+  };
+
+  this.resetAllSetting = function () {
     for (var eachGroup in groupDefaultHash_) {
       this.setValue(groupDefaultHash_[eachGroup].defaultValue, eachGroup);
     }
   };
 
-  this.getGroupAsArray = function() {
+  this.getGroupAsArray = function () {
     return groupDefaultArray_;
   };
-
-  this.setValue = function(value, item) {
-    item = item || "";
-    if (DEBUG_.userAtt) {
-      console.log("set " + " : "+ value);
-    }
-    localStorage.setItem(this.prefix+ "_"+item, value);
-  };
-
 }
 
-Setting.prototype = new LocalStorageMgr("SETTING");
-
+Settings.prototype = new LocalStorageMgr("SETTINGS");

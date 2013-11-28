@@ -1,9 +1,7 @@
 /**
  * This builds the container which has the settings controls.
  *
- * This container is added to the Initial scene.
- *
- * @author Linghua, Jeff
+ * @author Linghua Jin
  * @since early 2013
  */
 SceneMgr.prototype.conSettings = function (parent) {
@@ -24,23 +22,23 @@ SceneMgr.prototype.conSettings = function (parent) {
   containerBg.setLocation(bgX, 0.01 * H_);
   topCon.addChild(containerBg);
 
-  var settingFontSize = 40 * sf;
-  var settingFontColor = FONT_COLOR;
+  var settingsFontSize = 40 * sf;
+  var settingsFontColor = FONT_COLOR;
 
-  var settingImage = ["btnEmpty", "btnChecked"];
+  var settingsImage = ["btnEmpty", "btnChecked"];
   var groups = userSettings.getGroupAsArray();
   var rbsSmall = 75 * sf;
 
-  // create image change button
-  function createSettingButton(groupName, applyFun) {
+  function createSettingButton(groupName, applyFunc) {
 
     function pressDo(e, isToOn) {
       var actor = that.getActorFromEvent(e);
-      Util.changeActorImg(that.director, actor, settingImage[isToOn]);
+      Util.changeActorImg(that.director, actor, settingsImage[isToOn]);
       userSettings.setValue(isToOn, groupName);
       actor.isSettingOn = isToOn;
-      if (applyFun) {
-        applyFun(isToOn);
+
+      if (applyFunc) {
+        applyFunc(isToOn);
       }
     }
 
@@ -50,21 +48,36 @@ SceneMgr.prototype.conSettings = function (parent) {
       pressDo(e, actor.isSettingOn ? 0 : 1);
     }
 
-    var button = Util.createButtonWithImageFunWH(that.director, settingImage[0],
+    var button = Util.createButtonWithImageFunWH(that.director, settingsImage[0],
       pressActorDo, rbsSmall, rbsSmall);
     button.isSettingOn = userSettings.getValue(groupName);
-    Util.changeActorImg(that.director, button, settingImage[button.isSettingOn]);
+    Util.changeActorImg(that.director, button, settingsImage[button.isSettingOn]);
 
     return button;
   }
 
-  function createOneSettingRow(group, applyFun) {
+  function createOneSettingRow(group, applyFunc) {
     var groupName = group.name;
     var groupMsg = group.msg;
-    var button = createSettingButton(groupName, applyFun);
-    var settingTextArea = new WrapFont(groupMsg, settingFontSize, settingFontColor).setSize(300 * sf, rbsSmall);
+
+    var button = createSettingButton(groupName, applyFunc);
+    var settingTextArea = new WrapFont(groupMsg, settingsFontSize, settingsFontColor).setSize(300 * sf, rbsSmall);
+
     var con = Util.createAlignContainerWithActor(HORIZONTAL, [button, settingTextArea]);
     return con;
+  }
+
+  function applySoundSetting(value) {
+    that.director.setSoundEffectsEnabled(value);
+  }
+
+  function applyMusicSetting(value) {
+    if (value) {
+      that.audioMgr.resetBgAudio();
+    } else {
+      that.audioMgr.audio.pause();
+      that.audioMgr.audio.src = "";
+    }
   }
 
   var upperCon = Util.createAlignContainerWithActor(VERTICAL, [
@@ -86,24 +99,12 @@ SceneMgr.prototype.conSettings = function (parent) {
   if (DEBUG_.additionalButton) {
     function resetDo() {
       that.userInfo.resetOthers();
+      that.audioMgr.resetBgAudio();
     }
 
-    var resetBtn = Util.createButtonWithTextFun("reset all user data", resetDo);
+    var resetBtn = Util.createButtonWithTextFun("Reset all user data", resetDo);
     resetBtn.setLocation(W_ - resetBtn.width * 2, H_ - resetBtn.height * 2);
     topCon.addChild(resetBtn);
-  }
-
-  function applySoundSetting(value) {
-    that.director.setSoundEffectsEnabled(value);
-  }
-
-  function applyMusicSetting(value) {
-    if (value) {
-      that.audioMgr.resetBgAudio();
-    } else {
-      that.audioMgr.audio.pause();
-      that.audioMgr.audio.src = "";
-    }
   }
 
   return topCon;

@@ -1,69 +1,53 @@
 /**
- * User: Niu Niu
- * Date: 3/4/13
- * All rights reserved by Africa Swing
+ * The UserInfo object is a container for the more specific types of user attributes.
+ *
+ * @author Linghua Jin
+ * @since February 2013
  */
-
 function UserInfo(director) {
   this.userId = undefined;
-  this.level = new UserLevel();
-  //this.money = new MoneyMgr();
+  this.experience = new UserExperience();
+  this.money = new UserMoney();
   this.lock = new LockMgr(director);
-  //this.score = new UserGameScore();
+  //this.gameScore = new UserGameScore();
   //this.achievement= new AchievementMgr(director, this.money);
-  this.settings = new Setting();
+  this.settings = new Settings();
   this.equip = new UserEquip(this.lock);
-  //this.license = new UserLicense(this.lock);
-  //this.facebookInfo = new FacebookInfo(director);
-  //this.misc = new UserMisc();
-  this.character=new UserCharacter(this.lock);
+  this.character = new UserCharacter(this.lock);
 
   this.groupTogether = [
-    this.level, this.money, this.lock, this.score, this.achievement, this.setting,
-    this.equip, this.license, this.misc,this.character
+    this.experience, this.money, this.lock,
+    this.settings, this.equip,
+    this.character
   ];
 
   // other attributes;
   this.init();
 }
 
-
-// This could be deleted. (08/07/2013)
-UserInfo.prototype.isUserChanged = function(userNameNew) {
-
-  // login by sign in
-  userNameNew = userNameNew || "";
-  if (userNameNew && userNameNew != this.userName) {
-    return true;
-  }
-
-  // check login by facebook
-  var nameInfo = this.facebookInfo.getFacebookInfo();
-  var userName = nameInfo.facebookName;
-  // TODO: later for safety should use userId, because userName may be duplicate name.
-  if (userName != this.userName) {
-    return true;
-  }
-  return false;
+UserInfo.prototype.init = function () {
+  this.isLoggedIn = false;
+  this.userName = "Bilbo Baggins";
 };
 
-UserInfo.prototype.initOthers = function() {
-
-  // start to reset
+UserInfo.prototype.initOthers = function () {
   for (var i = 0; i < this.groupTogether.length; ++i) {
     var obj = this.groupTogether[i];
-    obj.resetUser(this.storeId);
+    obj.resetUser(this.userId);
   }
-
 };
 
- UserInfo.prototype.init = function() {
-  this.isLoggedIn = false;
-  this.userName = "Africa Swinger";
+UserInfo.prototype.resetOthers = function () {
+  this.experience.resetLevel();
+  this.money.resetMoney();
+  this.lock.resetStorage();
+  this.gameScore.resetValue();
+  this.setting.resetAllSetting();
 
+  this.equip.resetEquip();
+  this.character.resetCharacter();
 };
 
-
-UserInfo.prototype.getUserName = function() {
+UserInfo.prototype.getUserName = function () {
   return this.userName;
 };

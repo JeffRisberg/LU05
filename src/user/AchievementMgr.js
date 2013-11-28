@@ -6,13 +6,6 @@ function AchievementMgr (director, userMoney) {
 
 AchievementMgr.prototype = new LocalStorageMgr("ACH");
 
-/*
-AchievementMgr.prototype.reset = function(userID) {
-  this.userId = userID;
-};
-*/
-
-
 AchievementMgr.prototype.init = function() {
   this.initData();
   this.initGroupMap();
@@ -25,13 +18,11 @@ AchievementMgr.prototype.saveCurrentValueToDB = function() {
 
 AchievementMgr.prototype.queryCurrentValueFromDB = function() {
   // from web database
-
 };
 
 AchievementMgr.prototype.getValueFromLocal = function(achName, attr) {
   var value = parseFloat(this.getValue(this.getPathSuffix(achName, attr))) || 0 ;
   return value;
-
 };
 
 AchievementMgr.prototype.resetAllGroup = function() {
@@ -58,9 +49,8 @@ AchievementMgr.prototype.getPathSuffix = function(achName, attr) {
 };
 
 AchievementMgr.prototype.checkAndUpdate = function(groupName, value, isIncremental){
-
   var groups = this.groupMap[groupName];
-  var currentValue ;
+  var currentValue;
   var achievedItems = [];
   for (var i in groups) {
     var achName = groups[i];
@@ -91,7 +81,6 @@ AchievementMgr.prototype.checkAndUpdate = function(groupName, value, isIncrement
     this.setValueToLocal(achName, 1, "isAchieved");
     achievedItems.push(achName);
     this.addReward(achievement.reward);
-
   }
 
   // notify on screen
@@ -135,7 +124,6 @@ AchievementMgr.prototype.initGroupMap = function() {
   }
 };
 
-
 AchievementMgr.prototype.initData = function() {
 
   // structure:
@@ -176,24 +164,6 @@ AchievementMgr.prototype.initData = function() {
       "group": "highAcc",
       "img":"achieveAccuracy85"
     },
-    /*
-    "monkeyLicense":{
-      "description":"Pass the monkey License",
-      "type":"boolean",
-      "value":"",
-      "threshold":1,
-      "group": "monkeyLicensePassed",
-      "reward":1
-    },
-    "buyOneSkill":{
-      "description":"Buy one skill at shop",
-      "type":"boolean",
-      "value":"",
-      "threshold":1,
-      "group": "buySkillCount",
-      "reward":1
-    },
-    */
     "HighScore2000":{
       "description":"Achieve 2000 score in one run",
       "type":"value",
@@ -240,7 +210,4 @@ AchievementMgr.prototype.initData = function() {
       "img":"trueHacker"
     }
   };
-
 };
-
-

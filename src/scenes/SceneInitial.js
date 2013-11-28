@@ -12,7 +12,7 @@ SceneMgr.prototype.addSceneInitial = function (sceneName) {
 
   // layout
   var btnProfile = that.createButtonConSwitchScene("btnProfile", "sceneProfile", 0, 0, 2.4 * RBS_, RBS_);
-  var btnPlay = that.createButtonConSwitchScene("btnPlay", "sceneLoad", 0, 0, 2.4 * RBS_, RBS_);
+  var btnPlay = that.createButtonConSwitchScene("btnPlay", "scenePlay", 0, 0, 2.4 * RBS_, RBS_);
   var btnShop = that.createButtonConSwitchScene("btnShop", "sceneShop", 0, 0, 2.4 * RBS_, RBS_);
   var menuCon = Util.createAlignContainerWithActor(VERTICAL, [btnProfile, btnPlay, btnShop], 10 * sf);
   menuCon.setLocation(W_ - btnShop.width - 10 * sf, 10 * sf);
@@ -27,6 +27,10 @@ SceneMgr.prototype.addSceneInitial = function (sceneName) {
     .enableEvents(false)
     .centerAt(menuCon.x / 2, H_ * 0.60);
   scene.addChild(logoLower);
+
+  var btnSetting = that.createButtonConPopCon("btnSetting", that.conSettings, scene, 0, 0, RBS_, RBS_);
+  btnSetting.setLocation(10 * sf, H_ - btnSetting.height - 10 * sf);
+  scene.addChild(btnSetting);
 
   CocoonJS.App.onLoadInTheWebViewSucceed.addEventListener(function () {
     that.isWebViewReady = true;

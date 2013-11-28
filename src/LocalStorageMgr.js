@@ -1,8 +1,9 @@
 /**
- * Local Storage Generator
+ * The <i>LocalStorageMgr</i> is primarily a generator of keypaths for entries in the local
+ * storage facility of the browser.
  *
- * @param prefix
- * @constructor
+ * @author Linghua, others
+ * @since April 2013
  */
 function LocalStorageMgr(prefix) {
   this.prefix = prefix;
@@ -10,7 +11,9 @@ function LocalStorageMgr(prefix) {
   this.lastUpdateTime = 0; // second
 }
 
-// the path is made up from a prefix and a user Id
+/**
+ * A path is made up from a prefix and a user Id
+ */
 LocalStorageMgr.prototype.getPath = function () {
   if (!this.userId) {
     console.error("userId not valid");
@@ -19,7 +22,9 @@ LocalStorageMgr.prototype.getPath = function () {
   if (Util.isTrialVersion()) {
     return this.prefix + "_trial_" + this.userId + "_";
   }
-  return this.prefix + "_" + this.userId + "_";
+  else {
+    return this.prefix + "_" + this.userId + "_";
+  }
 };
 
 LocalStorageMgr.prototype.setValue = function (value, item) {
@@ -38,7 +43,7 @@ LocalStorageMgr.prototype.getValue = function (item) {
   return localStorage.getItem(this.getPath() + item);
 };
 
-// establish a different user for the UA manager
+// establish a different user
 LocalStorageMgr.prototype.resetUser = function (userId) {
   this.userId = userId;
 };

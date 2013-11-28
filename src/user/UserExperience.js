@@ -1,40 +1,44 @@
 /**
- * User: Niu Niu
- * Date: 3/1/13
- * All rights reserved by Africa Swing
+ * The UserExperience class holds the user's experience value, and the corresponding level.
+ *
+ * @author Linghua Jin
+ * @since May 2013
  */
 
-function UserLevel() {
+function UserExperience() {
 }
 
-UserLevel.prototype = new LocalStorageMgr("LEVEL");
+UserExperience.prototype = new LocalStorageMgr("LEVEL");
 
-UserLevel.prototype.getExpByLevel = function(level) {
-  return Math.floor(1618 * level + 618 * level * level + 0.618* Math.pow(1.618, level));
+UserExperience.prototype.getExpByLevel = function (level) {
+  return Math.floor(1618 * level + 618 * level * level + 0.618 * Math.pow(1.618, level));
 };
 
-UserLevel.prototype.resetLevel = function() {
+UserExperience.prototype.resetExperience = function () {
   this.setLevel(0);
   this.setExp(0);
 };
 
-UserLevel.prototype.setProgressBar = function( progressBar) {
+UserExperience.prototype.setExperienceTActor = function (experienceTActor) {
+  this.experienceTActor = experienceTActor;
+};
+UserExperience.prototype.setProgressBar = function (progressBar) {
   this.progressBar = progressBar;
 };
 
-UserLevel.prototype.getCurrExpPercent = function() {
+UserExperience.prototype.getCurrExpPercent = function () {
   var level = this.getLevel();
   var exp = this.getExp();
-  return this.calcExpPercent(exp, level+1);
+  return this.calcExpPercent(exp, level + 1);
 };
 
-UserLevel.prototype.calcExpPercent = function(exp, nextLevel) {
+UserExperience.prototype.calcExpPercent = function (exp, nextLevel) {
   var currLevelUp = this.getExpByLevel(nextLevel);
   var prevLevelUp = this.getExpByLevel(nextLevel - 1);
   return ( (exp - prevLevelUp) / (currLevelUp - prevLevelUp) );
 };
 
-UserLevel.prototype.expChange = function(scene, expDelta, levelUpFun) {
+UserExperience.prototype.expChange = function (scene, expDelta, levelUpFunc) {
   var that = this;
   var currentLevel = this.getLevel();
   var currentExp = this.getExp();
@@ -59,9 +63,8 @@ UserLevel.prototype.expChange = function(scene, expDelta, levelUpFun) {
     }
 
     // level up
-    this.progressBar.setPercentAnimation(scene, fromPoint, 1, levelUpFun);
+    this.progressBar.setPercentAnimation(scene, fromPoint, 1, levelUpFunc);
     fromPoint = 0;
-
   }
 
   var newLevel = nextLevel - 1;
@@ -70,27 +73,20 @@ UserLevel.prototype.expChange = function(scene, expDelta, levelUpFun) {
     this.setLevel(newLevel);
   }
   this.setExp(newExp);
-
 };
 
-UserLevel.prototype.setLevel = function(level) {
+UserExperience.prototype.setLevel = function (level) {
   this.setValue(level, "level");
 };
 
-UserLevel.prototype.getLevel = function() {
+UserExperience.prototype.getLevel = function () {
   return parseInt(this.getValue("level")) || 0;
 };
 
-UserLevel.prototype.setExp = function(exp) {
+UserExperience.prototype.setExp = function (exp) {
   this.setValue(exp, "exp");
 };
 
-UserLevel.prototype.getExp = function() {
+UserExperience.prototype.getExp = function () {
   return parseInt(this.getValue("exp")) || 0;
-};
-
-UserLevel.prototype.getHpTotal = function() {
-  var level = this.getLevel();
-  var bloodTotal =  100 * ( 1 + level/10);
-  return bloodTotal;
 };

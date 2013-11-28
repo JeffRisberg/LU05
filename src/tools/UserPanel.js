@@ -1,7 +1,9 @@
 /**
- * User: Niu Niu
- * Date: 3/4/13
- * All rights reserved by Africa Swing
+ * A UserPanel contains the user name, the user avatar, and key user attributes such
+ * as level, money, etc.
+ *
+ * @author Linghua Jin
+ * @since March 2013
  */
 function UserPanel(director) {
   this.director = director;
@@ -9,43 +11,52 @@ function UserPanel(director) {
 
   // aligned vertical
   this.userNameTActor = Util.createText("Name", 30 * sf);
+  this.experienceTActor = Util.createText("Experience", 30 * sf);
   this.userLevelTActor = Util.createText("Lv", 20 * sf);
   this.progressBar = new ProgressBar(this.director).setImage("progressBarCt", 220 * sf, 30 * sf);
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
   this.progressBar.addChild(this.userLevelTActor);
   this.conVertical = Util.createAlignContainerWithActor(true,
-    [this.userNameTActor, this.progressBar], 10 * sf);
+    [this.userNameTActor, this.experienceTActor, this.progressBar], 10 * sf);
   var conVertical = this.conVertical;
 
   this.setBounds(0, 0, conVertical.width, conVertical.height);
   this.addChild(conVertical);
 
-  this.setLocation(160 * sf, 20 * sf);
-
   // money
-  var moneyGem = Util.createImageConInBound(this.director, "gemImg", 0, 0, 50 * sf, 50 * sf);
+  var moneyGem = Util.createImageConInBound(this.director, "carrot", 0, 0, 50 * sf, 50 * sf);
   this.moneyGemText = Util.createText("0", 40 * sf);
   var moneyCon = Util.createAlignContainerWithActor(false, [moneyGem, this.moneyGemText], 0);
-  moneyCon.setLocation(0.35 * W_, 10 * sf);//location for money
+  moneyCon.setLocation(0.35 * W_, 10 * sf);
   this.addChild(moneyCon);
+
+  this.setLocation(160 * sf, 20 * sf);
 
   return this;
 }
 
 UserPanel.prototype = new CAAT.ActorContainer();
 
+/**
+ * Update the values of all items in the panel
+ *
+ * @param userInfo
+ */
 UserPanel.prototype.resetAll = function (userInfo) {
 
   if (!userInfo.userName) {
-    console.error("No userName in user Panel");
+    console.error("No Username in UserPanel");
   }
   this.userNameTActor.setText(userInfo.userName);
-  this.userLevelTActor.setText("Lv " + userInfo.level.getLevel());
-  this.moneyGemText.setText("" + userInfo.money.getTotalGems());
+  this.experienceTActor.setText("Exp: " + userInfo.experience.getExp());
+  this.userLevelTActor.setText("Level " + userInfo.experience.getLevel());
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
-  userInfo.money.setMoneyText(this.moneyGemText);
-  this.progressBar.setPercent(userInfo.level.getCurrExpPercent());
-  userInfo.level.setProgressBar(this.progressBar);
+
+  this.moneyGemText.setText("" + userInfo.money.getTotalGems());
+
+  this.progressBar.setPercent(userInfo.experience.getCurrExpPercent());
+  userInfo.experience.setExperienceTActor(this.experienceTActor);
+  userInfo.experience.setProgressBar(this.progressBar);
 };
 
 UserPanel.prototype.showInCurrentScene = function (scene) {
@@ -62,6 +73,11 @@ UserPanel.prototype.showOffCurrentScene = function () {
   }
 };
 
+/**
+ * Change the avatar image by re-building the actor
+ *
+ * @param licenseName
+ */
 UserPanel.prototype.setLicense = function (licenseName) {
   Util.destroyObj(this.userLicenseIActor);
 

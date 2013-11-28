@@ -15,16 +15,12 @@ SceneMgr.prototype.addSceneProfile = function (sceneName) {
   scene.addChild(btnBack);
 
   // add the title
-  var title = Util.createImageActorInBound(this.director, "scnProfileTitle", W_ * 0.2, H_ * 0.4, 300, 100)
+  var title = Util.createImageActorInBound(this.director, "scnProfileTitle", 0, 0, 300, 100)
     .enableEvents(false);
+  title.setLocation(W_ - title.width, 0);
   scene.addChild(title);
 
-  var moneyGem = Util.createImageConInBound(this.director, "pointsImg", 0, 0, 50 * sf, 50 * sf);
-  this.moneyGemText = Util.createText("0", 40 * sf);
-  var moneyCon = Util.createAlignContainerWithActor(false, [moneyGem, this.moneyGemText], 0);
-  moneyCon.setLocation(0.55 * W_, 10 * sf);//location for money
-  scene.addChild(moneyCon);
-
+  // Water
   this.waterActor = Util.createText("Water", 30 * sf);
   this.waterLevelActor = Util.createText("Goal 2013", 20 * sf);
 
@@ -35,13 +31,12 @@ SceneMgr.prototype.addSceneProfile = function (sceneName) {
 
   var conVerticalWater = Util.createAlignContainerWithActor(true,
     [this.waterActor, this.progressBarWater], 10 * sf);
-  conVerticalWater.setBounds(160 * sf, 20 * sf, conVerticalWater.width, conVerticalWater.height);
+  conVerticalWater.setBounds(160 * sf, 220 * sf, conVerticalWater.width, conVerticalWater.height);
   scene.addChild(conVerticalWater);
 
-
-  this.materialsActor = Util.createText("Material", 30 * sf);
+  // Materials
+  this.materialsActor = Util.createText("Materials", 30 * sf);
   this.materialsLevelActor = Util.createText("Goal 2013", 20 * sf);
-
 
   this.progressBarMaterial = new ProgressBar(this.director).setImage("progressBarCt", 220 * sf, 30 * sf);
   this.materialsLevelActor.centerAt(this.progressBarMaterial.width / 2, this.progressBarMaterial.height / 2);
@@ -50,18 +45,19 @@ SceneMgr.prototype.addSceneProfile = function (sceneName) {
 
   var conVerticalMaterial = Util.createAlignContainerWithActor(true,
     [this.materialsActor, this.progressBarMaterial], 10 * sf);
-  conVerticalMaterial.setBounds(160 * sf, 100 * sf, conVerticalMaterial.width, conVerticalMaterial.height);
+  conVerticalMaterial.setBounds(160 * sf, 300 * sf, conVerticalMaterial.width, conVerticalMaterial.height);
   scene.addChild(conVerticalMaterial);
 
-    var btnSetting = that.createButtonConPopCon("btnSetting", that.conSettings, scene, 0, 0, RBS_, RBS_);
-    btnSetting.setLocation(10 * sf, H_ - btnSetting.height - 10 * sf);
-    scene.addChild(btnSetting);
-
   /**
-   * This is called by the CAAT when the scene becomes the current scene
+   * This is called by CAAT when the scene becomes the current scene
    */
   scene.activated = function () {
     that.commonDoWhenSceneStart();
+
+    that.userPanel.showInCurrentScene(scene);
+
+    that.progressBarWater.setPercent(Math.random());
+    that.progressBarMaterial.setPercent(Math.random());
   };
 
   /**
