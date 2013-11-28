@@ -14,18 +14,26 @@
   }
 
   var loadingImages = [
+    {id: "rabbit", url: R_ + "/images/rabbit.png"},
+    {id: "rabbit2", url: R_ + "/images/rabbit2.png"},
+    {id: "rabbit3", url: R_ + "/images/rabbit3.png"},
     {id: "general", url: R_ + "/images/general.png"},
     {id: "buttons", url: R_ + "/images/buttons.png"},
     {id: "pause", url: R_ + "/images/pause.png"},
     {id: "carrot", url: R_ + "/images/carrot.png"},
+    {id: "heart", url: R_ + "/images/heart.png"},
     {id: "btnBack", url: R_ + "/images/btnBack.png"},
     {id: "btnProfile", url: R_ + "/images/btnProfile.png"},
     {id: "btnPlay", url: R_ + "/images/btnPlay.png"},
     {id: "btnShop", url: R_ + "/images/btnShop.png"},
     {id: "btnLeft", url: R_ + "/images/btnLeft.png"},
     {id: "btnRight", url: R_ + "/images/btnRight.png"},
+    {id: "btnCancel", url: R_ + "/images/btnCancel.png"},
+    {id: "btnUnlock", url: R_ + "/images/btnUnlock.png"},
     {id: "checkMark", url: R_ + "/images/checkMark.png"},
-    {id: "containerBg", url: R_ + "/images/containerBg.png"},
+    {id: "bgContainer", url: R_ + "/images/bgContainer.png"},
+    {id: "bgFlat", url: R_ + "/images/bgFlat.png"},
+    {id: "bgNotification", url: R_ + "/images/bgNotification.png"},
 
     {id: "scnInitialBg", url: R_ + "/images/scnInitial/bg.png"},
     {id: "logoUpper", url: R_ + "/images/scnInitial/logoUpper.png"},

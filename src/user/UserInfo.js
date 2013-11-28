@@ -6,9 +6,10 @@
  */
 function UserInfo(director) {
   this.userId = undefined;
+  this.lock = new LockMgr(director);
+
   this.experience = new UserExperience();
   this.money = new UserMoney();
-  this.lock = new LockMgr(director);
   //this.gameScore = new UserGameScore();
   //this.achievement= new AchievementMgr(director, this.money);
   this.settings = new Settings();
@@ -16,12 +17,11 @@ function UserInfo(director) {
   this.character = new UserCharacter(this.lock);
 
   this.groupTogether = [
-    this.experience, this.money, this.lock,
+    this.lock, this.experience, this.money,
     this.settings, this.equip,
     this.character
   ];
 
-  // other attributes;
   this.init();
 }
 

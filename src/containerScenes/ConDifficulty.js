@@ -108,7 +108,7 @@ SceneMgr.prototype.conLicense = function (parent, actor) {
   }
 
   that.userPanel.showInCurrentScene(topCon);
-  var conBg = Util.createImageConInBound(that.director, "containerBg", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
+  var conBg = Util.createImageConInBound(that.director, "bgContainer", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
   topCon.addChild(conBg);
 
   var picSize = 125 * sf

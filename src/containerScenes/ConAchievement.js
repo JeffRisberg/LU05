@@ -12,7 +12,7 @@ SceneMgr.prototype.conAchievement = function (parent) {
   var goBackButton = Util.createButtonConWithImageFunInBound(that.director, "btnBack", destroyTopCon, 10 * sf, 10 * sf, RBS_, RBS_);
   topCon.addChild(goBackButton);
 
-  var conBg = Util.createImageConInBound(that.director, "containerBg", 0.13 * W_, 0, W_ * 0.8, H_);
+  var conBg = Util.createImageConInBound(that.director, "bgContainer", 0.13 * W_, 0, W_ * 0.8, H_);
   topCon.addChild(conBg);
   var picSize = 100 * sf;
   var scaleFactor = 1.5;

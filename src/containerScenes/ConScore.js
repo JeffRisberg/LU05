@@ -12,8 +12,8 @@ SceneMgr.prototype.conScore = function (parent) {
     that.conReturnCommonDo();
   }
 
-  var containerBg = Util.createImageConInBound(that.director, "", 0.2 * W_, 0.2 * H_, W_ * 0.7, H_ * 0.7);
-  topCon.addChild(containerBg);
+  var bgContainer = Util.createImageConInBound(that.director, "", 0.2 * W_, 0.2 * H_, W_ * 0.7, H_ * 0.7);
+  topCon.addChild(bgContainer);
 
   //two btns
   var topX = W_ * 0.5;
@@ -252,8 +252,8 @@ SceneMgr.prototype.conScore = function (parent) {
 
   // top level layout
   var alignedConAll = Util.createAlignContainerWithActor(HORIZONTAL, [scoreCon, buttonsCon]);
-  alignedConAll.centerAt(containerBg.width * 0.45, containerBg.height * 0.6);
-  containerBg.addChild(alignedConAll);
+  alignedConAll.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
+  bgContainer.addChild(alignedConAll);
   return topCon;
 
 };

@@ -27,11 +27,11 @@ SceneMgr.prototype.conLeaderboard = function (parent) {
   var bgX = 0.18 * W_; //bgX representing the craft paper bg starting x
   var bgY = 0;//bgY representing the craft paper bg starting x
 
-  var containerBg = Util.createImageConInBound(that.director, "containerBg", bgX, bgY, W_ * 0.65, H_)
+  var bgContainer = Util.createImageConInBound(that.director, "bgContainer", bgX, bgY, W_ * 0.65, H_)
     .enableEvents(false);
-  topCon.addChild(containerBg);
+  topCon.addChild(bgContainer);
 
-  var episodeNameWidth = containerBg.width * 0.7;
+  var episodeNameWidth = bgContainer.width * 0.7;
   var goBackButton = Util.createButtonConWithImageFunInBound(that.director, "btnBack", destroyTopCon, 10 * sf, 10 * sf, RBS_, RBS_);
   topCon.addChild(goBackButton);
 
@@ -64,8 +64,8 @@ SceneMgr.prototype.conLeaderboard = function (parent) {
   }
 
   var difficultyInfoTextArea = new WrapFont("Easy, 0.5X", 20 * sf, FONT_COLOR).setSize(120 * sf, 50 * sf);
-  songNameTextArea.centerAt(containerBg.width / 2, containerBg.height * 0.2);
-  //containerBg.addChild(songNameTextArea);
+  songNameTextArea.centerAt(bgContainer.width / 2, bgContainer.height * 0.2);
+  //bgContainer.addChild(songNameTextArea);
 
   var distanceFromBg = 10 * sf;
   var btnLeft = Util.createButtonWithImageFunWH(that.director, "btnLeft",
@@ -78,7 +78,7 @@ SceneMgr.prototype.conLeaderboard = function (parent) {
     function () {
       songIndexChange(1);
     }, RBS_, RBS_);
-  btnRight.setLocation(bgX + containerBg.width + distanceFromBg, H_ / 2 - RBS_ / 2).setAlpha(0.9);
+  btnRight.setLocation(bgX + bgContainer.width + distanceFromBg, H_ / 2 - RBS_ / 2).setAlpha(0.9);
   topCon.addChild(btnRight);
 
   var currentSelect = undefined;
@@ -96,7 +96,7 @@ SceneMgr.prototype.conLeaderboard = function (parent) {
 
   // create leaderboard view
   var disFromBgEdge = 100 * sf;
-  var leaderboardSliderW = containerBg.width - 2 * disFromBgEdge;
+  var leaderboardSliderW = bgContainer.width - 2 * disFromBgEdge;
 
   // init wrapfont
   var fontSize = 20 * sf;
@@ -119,7 +119,7 @@ SceneMgr.prototype.conLeaderboard = function (parent) {
   var leaderCon = Util.createAlignContainerWithActor(true, [songNameTextArea, leaderContentWrapper, userRankCon], 0);
   Util.changeLayoutAlignOnActor(leaderCon, "CENTER", "CENTER");
   leaderCon.setLocation(disFromBgEdge, 60 * sf);//songNameTextArea.height + 50*sf
-  containerBg.addChild(leaderCon);
+  bgContainer.addChild(leaderCon);
 
   // TODO: create less text
 

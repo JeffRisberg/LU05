@@ -18,9 +18,9 @@ SceneMgr.prototype.conSettings = function (parent) {
   topCon.addChild(goBackButton);
 
   var bgX = goBackButton.x + RBS_ + 2 * sf;
-  var containerBg = Util.createImageConInBound(that.director, "containerBg", bgX, H_, W_ - bgX, H_);
-  containerBg.setLocation(bgX, 0.01 * H_);
-  topCon.addChild(containerBg);
+  var bgContainer = Util.createImageConInBound(that.director, "bgContainer", bgX, H_, W_ - bgX, H_);
+  bgContainer.setLocation(bgX, 0.01 * H_);
+  topCon.addChild(bgContainer);
 
   var settingsFontSize = 40 * sf;
   var settingsFontColor = FONT_COLOR;
@@ -84,7 +84,7 @@ SceneMgr.prototype.conSettings = function (parent) {
     createOneSettingRow(groups[0], applySoundSetting),
     createOneSettingRow(groups[1], applyMusicSetting)
   ], 10 * sf);
-  upperCon.setLocation(60 * sf, containerBg.height * 0.15);
+  upperCon.setLocation(60 * sf, bgContainer.height * 0.15);
 
   var lowerCon = Util.createAlignContainerWithActor(VERTICAL, [
     createOneSettingRow(groups[2]),
@@ -92,9 +92,9 @@ SceneMgr.prototype.conSettings = function (parent) {
     createOneSettingRow(groups[4]),
     createOneSettingRow(groups[5])
   ], 10 * sf);
-  lowerCon.setLocation(upperCon.x + containerBg.width * 0.4, upperCon.y);
+  lowerCon.setLocation(upperCon.x + bgContainer.width * 0.4, upperCon.y);
 
-  containerBg.addChild(upperCon).addChild(lowerCon);
+  bgContainer.addChild(upperCon).addChild(lowerCon);
 
   if (DEBUG_.additionalButton) {
     function resetDo() {
