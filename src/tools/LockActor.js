@@ -1,6 +1,7 @@
 //one lock actor
 function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock, lockImg) {
   var that = this;
+
   CAAT.ActorContainer.call(this);
   var pressDo_;
   var lockImg_ = lockImg || "Locked";
@@ -11,8 +12,8 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
   var slider_ = undefined;
   var recordW_, recordH_;
   var isLocked_ = hasLock;
-  var episodeMgr_;
   var groupNoSuffix_;
+  var episodeMgr_;
 
   this.pressDo = pressDo_;
 
@@ -39,22 +40,25 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
       }
     }
 
-    pressDoUnlocked_(e);
-
+    if (isLocked_) {
+      pressDoLocked_(e);
+    } else {
+      pressDoUnlocked_(e);
+    }
     slider_.lastTouchedActor = this;
   };
 
   function unlockSuccess() {
-    //if (!price_) {
+    if (!price_) {
       return true;
-    //}
+    }
 
     // check money enough
-    //if (!userMoney_.addGems(-price_)) {
-    //  Util.createPopUpNotEnough(director_);
-    //  return false;
-    //}
-    //return true;
+    if (!userMoney_.addGems(-price_)) {
+      Util.createPopUpNotEnough(director_);
+      return false;
+    }
+    return true;
   }
 
   function setLockedInit(isLocked) {
@@ -74,7 +78,7 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
       that.setSizeMy(recordW_, recordH_);
     }
     isLocked_ = !isUnlockedOrNum;
-    //lockMgr_.setGroupIsUnlockOrNum(group_, isUnlockedOrNum);
+    lockMgr_.setGroupIsUnlockOrNum(group_, isUnlockedOrNum);
   }
 
   function setLockedSt(isLocked) {
@@ -83,7 +87,7 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
       that.setSizeMy(recordW_, recordH_);
     }
     isLocked_ = isLocked;
-    //lockMgr_.setGroupIsUnlockOrNum(group_, (!isLocked)? 1:0);
+    lockMgr_.setGroupIsUnlockOrNum(group_, (!isLocked) ? 1 : 0);
   }
 
   // public method
@@ -124,23 +128,28 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
     pressDoLocked_ = pressDoLocked;
     groupNoSuffix_ = group || originalImg_;
     if (episodeMgr_) {
-      for (var i in episodeMgr_.difficultyRange) {
-        //lockMgr_.addLockNew(this, groupNoSuffix_ + "_" + episodeMgr_.difficultyRange[i]);
+      for (var i in episodeMgr_.getDifficultyRange()) {
+        lockMgr_.addLockNew(this, groupNoSuffix_ + "_" + episodeMgr_.getDifficulty()[i]);
       }
-      //group_ = groupNoSuffix_ + "_" + episodeMgr_.difficulty;
+      group_ = groupNoSuffix_ + "_" + episodeMgr_.getDifficulty();
     }
     return this;
   };
 
   this.resetGroup = function () {
-    //group_ = groupNoSuffix_ + "_" + episodeMgr_.difficulty;
-    //this.setLocked(!lockMgr_.getGroupIsUnlockOrNum(group_));
+    group_ = groupNoSuffix_ + "_" + episodeMgr_.getDifficulty();
+    this.setLocked(!lockMgr_.getGroupIsUnlockOrNum(group_));
   };
 
   this.setSizeMy = function (w, h) {
     this.setSize(w, h);
     recordW_ = w;
     recordH_ = h;
+    return this;
+  };
+
+  this.setEpisodeMgr = function (episodeMgr) {
+    episodeMgr_ = episodeMgr;
     return this;
   };
 
@@ -159,6 +168,13 @@ function LockActor(director_, originalImg_, pressDoUnlocked_, lockMgr_, hasLock,
 
   // init
   setLockedInit(hasLock);
+  /*
+   if (!hasLock) {
+   lockMgr_.setGroupIsUnlock(group_, 1);
+   } else {
+   this.setLocked(!lockMgr_.getGroupIsUnlock(group_));
+   }
+   */
 
   this.pressDo = pressDo_;
 
