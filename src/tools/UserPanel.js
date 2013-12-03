@@ -1,6 +1,6 @@
 /**
- * A UserPanel contains the user name, the user avatar, and key user attributes such
- * as level, money, etc.
+ * The <i>UserPanel</i> is a display component that shows the player name, basic scores, and amount
+ * of money.  This component is created once and moved from scene to scene.
  *
  * @author Linghua Jin
  * @since March 2013
@@ -9,21 +9,19 @@ function UserPanel(director) {
   this.director = director;
   CAAT.ActorContainer.call(this);
 
-  // aligned vertical
+  // name and level indicators in a vertical container
   this.userNameTActor = Util.createText("Name", 30 * sf);
   this.experienceTActor = Util.createText("Experience", 30 * sf);
   this.userLevelTActor = Util.createText("Lv", 20 * sf);
   this.progressBar = new ProgressBar(this.director).setImage("progressBarCt", 220 * sf, 30 * sf);
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
   this.progressBar.addChild(this.userLevelTActor);
-  this.conVertical = Util.createAlignContainerWithActor(true,
+  var nameLevelCon = Util.createAlignContainerWithActor(true,
     [this.userNameTActor, this.experienceTActor, this.progressBar], 10 * sf);
-  var conVertical = this.conVertical;
+  this.setBounds(0, 0, nameLevelCon.width, nameLevelCon.height);
+  this.addChild(nameLevelCon);
 
-  this.setBounds(0, 0, conVertical.width, conVertical.height);
-  this.addChild(conVertical);
-
-  // money
+  // money indicator in a horizontal container
   var moneyGem = Util.createImageConInBound(this.director, "carrot", 0, 0, 50 * sf, 50 * sf);
   this.moneyGemText = Util.createText("0", 40 * sf);
   var moneyCon = Util.createAlignContainerWithActor(false, [moneyGem, this.moneyGemText], 0);
@@ -43,7 +41,6 @@ UserPanel.prototype = new CAAT.ActorContainer();
  * @param userInfo
  */
 UserPanel.prototype.resetAll = function (userInfo) {
-
   if (!userInfo.userName) {
     console.error("No Username in UserPanel");
   }
@@ -71,19 +68,4 @@ UserPanel.prototype.showOffCurrentScene = function () {
   if (this.parent) {
     this.parent.removeChild(this);
   }
-};
-
-/**
- * Change the avatar image by re-building the actor
- *
- * @param licenseName
- */
-UserPanel.prototype.setLicense = function (licenseName) {
-  Util.destroyObj(this.userLicenseIActor);
-
-  var lw = 30 * sf;
-  this.userLicenseIActor = Util.createImageActorInBound(this.director, "monkeyFace",
-    this.conVertical.width - lw, 0, lw, lw);
-  this.userLicenseIActor.setLocation(120 * sf, 25 * sf);
-  this.addChild(this.userLicenseIActor);
 };

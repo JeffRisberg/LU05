@@ -1,6 +1,9 @@
 /**
  * The UserMoney object holds the current money for the user, and supports increment, decrement, and
  * conversion to/from gems.
+ *
+ * @author Linghua Jin
+ * @since May 2013
  */
 function UserMoney() {
   this.totalStars = 0;
