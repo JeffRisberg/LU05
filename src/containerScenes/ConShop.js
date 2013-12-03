@@ -70,6 +70,8 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
 
     function buttonUnlockedDoEachActor() {
       if (itemActorCon.tryUnlockSuccess()) {
+        alert(that.userInfo.money.getTotalGems());
+        that.userPanel.resetAll(that.userInfo);
         pressDoUnlock();
       }
     }
@@ -232,6 +234,8 @@ SceneMgr.prototype.conItem = function (parent, actor) {
       var group = currentSelection.image;
       var oriOwn = parseInt(lockMgr.getGroupIsUnlockOrNum(group)) || 0;
       if (itemActorCon.tryUnlockSuccess()) {
+        alert(that.userInfo.money.getTotalGems());
+        that.userPanel.resetAll(that.userInfo);
         pressDoUnlock();
         lockMgr.setGroupIsUnlockOrNum(group, oriOwn + 1);
       }

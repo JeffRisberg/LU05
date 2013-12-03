@@ -13,7 +13,7 @@ function UserEquip(lockMgr_) {
       price: 36,
       onlyAffectEnd: true,
       msg: "Exp + 20%",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("expEarn")) {
           target.expEarn *= 1.2;
         } else {
@@ -26,11 +26,11 @@ function UserEquip(lockMgr_) {
       price: 70,
       onlyAffectEnd: true,
       msg: "Money + 20%",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("gemEarn") && target.hasOwnProperty("gemText")) {
-          target.gemEarn = Math.floor(target.gemEarn* 1.2);
+          target.gemEarn = Math.floor(target.gemEarn * 1.2);
           target.gemText = target.gemEarn + " (+20%)";
-        } else{
+        } else {
           applyCommon(target);
         }
       }
@@ -40,11 +40,13 @@ function UserEquip(lockMgr_) {
       price: 90,
       onlyAffectEnd: true,
       msg: "accuracy + 2%",
-      fun: function(target) {
+      fun: function (target) {
         // note if acc is 91% then the value here is 91
         if (target && target.hasOwnProperty("acc") && target.hasOwnProperty("accText")) {
-          target.acc = (target.acc+1).toFixed(1);
-          if (target.acc > 100) { target.acc = 100}
+          target.acc = (target.acc + 1).toFixed(1);
+          if (target.acc > 100) {
+            target.acc = 100
+          }
           target.accText = target.acc + " (+1)";
         } else {
           applyCommon(target);
@@ -56,10 +58,10 @@ function UserEquip(lockMgr_) {
       price: 130,
       onlyAffectEnd: true,
       msg: "score + 10%",
-      fun: function(target) {
+      fun: function (target) {
         // note if acc is 91% then the value here is 91
         if (target && target.hasOwnProperty("score") && target.hasOwnProperty("scoreText")) {
-          target.score = Math.floor(target.score* 1.1);
+          target.score = Math.floor(target.score * 1.1);
           target.scoreText = target.score + " (+10%)";
         } else {
           applyCommon(target);
@@ -73,11 +75,15 @@ function UserEquip(lockMgr_) {
       image: "itemAcc",
       price: 5,
       msg: "increase accuracy 20% for 10s",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("scoreMgr")
           && target.hasOwnProperty("cancelFunList")) {
           target.scoreMgr.setItemAccFactor(1.2);
-          function endItemDo() {target.scoreMgr.setItemAccFactor(1); endDoCommon(target);}
+          function endItemDo() {
+            target.scoreMgr.setItemAccFactor(1);
+            endDoCommon(target);
+          }
+
           setTimeout(endItemDo, 10000);
           target.cancelFunList.push(endItemDo);
         } else {
@@ -89,7 +95,7 @@ function UserEquip(lockMgr_) {
       image: "itemFullBlood",
       price: 5,
       msg: "recover to full energy immediately",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("hpBar")) {
           target.hpBar.setPercent(1);
           endDoCommon(target);
@@ -102,16 +108,21 @@ function UserEquip(lockMgr_) {
       image: "itemRecoverDuration",
       price: 2,
       msg: "recover 3%/sec for 20s",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("hpBar") && target.hasOwnProperty("cancelFunList")) {
-          var intervalId = Util.setIntervalWithTotal(1000, 20, function() {
+          var intervalId = Util.setIntervalWithTotal(1000, 20, function () {
             target.hpBar.incPercent(0.03);
           });
 
-          function endItemDo() {endDoCommon(target);}
+          function endItemDo() {
+            endDoCommon(target);
+          }
+
           setTimeout(endItemDo, 20000);
           // later it can remove interval if it is not finished when game ended
-          target.cancelFunList.push(function() { clearInterval(intervalId)});
+          target.cancelFunList.push(function () {
+            clearInterval(intervalId)
+          });
         } else {
           applyCommon(target);
         }
@@ -121,11 +132,15 @@ function UserEquip(lockMgr_) {
       image: "itemShield",
       price: 8,
       msg: "reduce energy drop to 50% for 20s",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("scoreMgr")
           && target.hasOwnProperty("cancelFunList")) {
           target.scoreMgr.setItemHpFactor(0.5);
-          function endItemDo() {target.scoreMgr.setItemHpFactor(1); endDoCommon(target);}
+          function endItemDo() {
+            target.scoreMgr.setItemHpFactor(1);
+            endDoCommon(target);
+          }
+
           setTimeout(endItemDo, 20000);
           target.cancelFunList.push(endItemDo);
         } else {
@@ -137,11 +152,15 @@ function UserEquip(lockMgr_) {
       image: "itemScoreDouble",
       price: 15,
       msg: "score boost to twice for 10s",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("scoreMgr")
           && target.hasOwnProperty("cancelFunList")) {
           target.scoreMgr.setItemScoreFactor(2);
-          function endItemDo() {target.scoreMgr.setItemScoreFactor(1); endDoCommon(target);}
+          function endItemDo() {
+            target.scoreMgr.setItemScoreFactor(1);
+            endDoCommon(target);
+          }
+
           setTimeout(endItemDo, 10000);
           target.cancelFunList.push(endItemDo);
         } else {
@@ -153,11 +172,15 @@ function UserEquip(lockMgr_) {
       image: "itemCombo",
       price: 10,
       msg: "combo will not be interrupt in 10s",
-      fun: function(target) {
+      fun: function (target) {
         if (target && target.hasOwnProperty("scoreMgr")
           && target.hasOwnProperty("cancelFunList")) {
           target.scoreMgr.setItemComboFactor(true);
-          function endItemDo() {target.scoreMgr.setItemComboFactor(false); endDoCommon(target);}
+          function endItemDo() {
+            target.scoreMgr.setItemComboFactor(false);
+            endDoCommon(target);
+          }
+
           setTimeout(endItemDo, 10000);
           target.cancelFunList.push(endItemDo);
         } else {
@@ -169,8 +192,8 @@ function UserEquip(lockMgr_) {
       image: "itemPass100",
       price: 25,
       msg: "no energy loss in one run",
-      fun: function(target) {
-        if (target && target.hasOwnProperty("scoreMgr") ) {
+      fun: function (target) {
+        if (target && target.hasOwnProperty("scoreMgr")) {
           target.scoreMgr.setItemStrongFactor(true);
         } else {
           applyCommon(target);
@@ -182,7 +205,7 @@ function UserEquip(lockMgr_) {
   var talentGroupHash_, itemGroupHash_;
 
   // for check which item has been equip so same item cannot be equip again
-  var equipItemHash_= {};
+  var equipItemHash_ = {};
 
   var buttonTalentGroup_ = [
     "talent0",
@@ -195,10 +218,14 @@ function UserEquip(lockMgr_) {
 
   var otherLockGroup_ = ["talent1_lockBox", "item1_lockBox"];
 
-  this.getTalentGroup = function() { return talentGroup_;};
-  this.getItemGroup = function() { return itemGroup_;};
+  this.getTalentGroup = function () {
+    return talentGroup_;
+  };
+  this.getItemGroup = function () {
+    return itemGroup_;
+  };
 
-  this.resetEquip = function() {
+  this.resetEquip = function () {
     var i;
     for (i in buttonTalentGroup_) {
       this.setValue("", buttonTalentGroup_[i]);
@@ -207,13 +234,16 @@ function UserEquip(lockMgr_) {
     for (i in buttonItemGroup_) {
       this.setValue("", buttonItemGroup_[i]);
     }
-
   };
 
-  this.getButtonTalentGroup = function() { return buttonTalentGroup_;};
-  this.getButtonItemGroup = function() { return buttonItemGroup_;};
+  this.getButtonTalentGroup = function () {
+    return buttonTalentGroup_;
+  };
+  this.getButtonItemGroup = function () {
+    return buttonItemGroup_;
+  };
 
-  this.applyItemEffect = function(itemImage, target, buttonItemName) {
+  this.applyItemEffect = function (itemImage, target, buttonItemName) {
     itemGroupHash_[itemImage].fun(target);
     var quantityLeft = lockMgr_.getGroupIsUnlockOrNum(itemImage);
     quantityLeft--;
@@ -226,11 +256,11 @@ function UserEquip(lockMgr_) {
 
   };
 
-  this.applyTalentEffectEnd =   function (target) {
+  this.applyTalentEffectEnd = function (target) {
     var buttonTalentGroup = this.getButtonTalentGroup();
     for (var i in buttonTalentGroup) {
       var talentGroup = this.getValue(buttonTalentGroup[i]);
-      if (!talentGroup ) {
+      if (!talentGroup) {
         continue;
       }
       if (talentGroupHash_[talentGroup].onlyAffectEnd) {
@@ -239,7 +269,7 @@ function UserEquip(lockMgr_) {
     }
   };
 
-  this.getIsEquip = function(itemName) {
+  this.getIsEquip = function (itemName) {
     // init equip item hash
     for (var i in buttonItemGroup_) {
       if (that.getValue(buttonItemGroup_[i]) == itemName) {
@@ -249,17 +279,17 @@ function UserEquip(lockMgr_) {
     return false;
   };
 
-  this.incItemByOne = function(group) {
+  this.incItemByOne = function (group) {
     var oriOwn = parseInt(lockMgr_.getGroupIsUnlockOrNum(group)) || 0;
     lockMgr_.setGroupIsUnlockOrNum(group, oriOwn + 1);
   };
 
-  this.randomAwardItem = function(factor) {
+  this.randomAwardItem = function (factor) {
     var baseFactor = 0.6;
     var finalFactor = baseFactor * factor;
-    for (var i = itemGroup_.length-1; i>=0; --i){
+    for (var i = itemGroup_.length - 1; i >= 0; --i) {
       var itemObject = itemGroup_[i];
-      if (Util.prob(finalFactor/itemObject.price)) {
+      if (Util.prob(finalFactor / itemObject.price)) {
         this.incItemByOne(itemObject.image);
         return itemObject.image;
       }
@@ -275,13 +305,13 @@ function UserEquip(lockMgr_) {
   }
 
   function addAllGroup(group) {
-    for ( var i in group) {
+    for (var i in group) {
       lockMgr_.addLockGroup(getGroupImage(group, i));
     }
   }
 
   function applyCommon(target) {
-    console.error("no enough target" , target);
+    console.error("no enough target", target);
   }
 
   function endDoCommon(target) {
@@ -296,10 +326,8 @@ function UserEquip(lockMgr_) {
       lockMgr_.addLockGroup(otherLockGroup_[i]);
     }
     talentGroupHash_ = Util.createHashFromArray(talentGroup_, "image");
-    itemGroupHash_  = Util.createHashFromArray(itemGroup_, "image");
-
+    itemGroupHash_ = Util.createHashFromArray(itemGroup_, "image");
   }
-
 
   init();
 }

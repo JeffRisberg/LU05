@@ -77,6 +77,7 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
         }
         popup.closeDo();
         Util.destroyActor(lockActor);
+        that.userPanel.resetAll(that.userInfo);
         lockMgr.setGroupIsUnlockOrNum(groupName, 1);
       }
 
@@ -106,7 +107,7 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
 
     function pressDoLocked() {
       var unlockMsg = "Unlock additional character with " + price + " " + GEM_UNIT;
-      var buttonUnlock = Util.createButtonWithImageFunWH(that.director, "btnUnlock", buttonUnlockDo,
+      var buttonUnlock = Util.createButtonWithImageFunWH(that.director, "unlock", buttonUnlockDo,
         120 * sf, 50 * sf);
       var buttonCancel = Util.createButtonWithImageFunWH(that.director, "btnCancel", btnCancelDo,
         120 * sf, 50 * sf);

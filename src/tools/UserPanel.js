@@ -54,6 +54,12 @@ UserPanel.prototype.resetAll = function (userInfo) {
   this.progressBar.setPercent(userInfo.experience.getCurrExpPercent());
   userInfo.experience.setExperienceTActor(this.experienceTActor);
   userInfo.experience.setProgressBar(this.progressBar);
+
+  if (userInfo.money.getTotalGems() < 26) {
+    this.experienceTActor.setVisible(false); // should cause a "low carrots - get food" actor to appear
+  } else {
+    this.experienceTActor.setVisible(true); // should cause a "low carrots - get food" actor to hide
+  }
 };
 
 UserPanel.prototype.showInCurrentScene = function (scene) {
