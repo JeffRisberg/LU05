@@ -6,8 +6,6 @@
  * @since May 2013
  */
 function UserMoney() {
-  this.totalStars = 0;
-  this.starToGemRatio = 1 / 10;
 }
 
 UserMoney.prototype = new LocalStorageMgr("MONEY");
@@ -41,18 +39,13 @@ UserMoney.prototype.getTotalGemsFromLocal = function () {
   return this.totalGems;
 };
 
-UserMoney.prototype.getTotalStars = function () {
-  return this.totalStars;
-};
+
 
 UserMoney.prototype.setTotalGems = function (gems) {
   this.totalGems = gems;
   this.setValue(gems, "gem");
 };
 
-UserMoney.prototype.setTotalStars = function (stars) {
-  this.totalStars = stars;
-};
 
 UserMoney.prototype.addGems = function (gems) {
   if (this.totalGems + gems < 0) {
@@ -66,21 +59,5 @@ UserMoney.prototype.addGems = function (gems) {
 UserMoney.prototype.timesGems = function (times) {
   this.totalGems = Math.floor(this.totalGems * times);
   return this;
-};
-
-UserMoney.prototype.addStars = function (stars) {
-  this.totalStars += stars;
-};
-
-UserMoney.prototype.convertStarIntoGem = function (stars) {
-  var gems = stars * this.starToGemRatio;
-  this.gems += gems;
-  this.stars -= stars;
-};
-
-UserMoney.prototype.convertGemIntoStar = function (gems) {
-  var stars = gems * (1.0 / this.starToGemRatio);
-  this.gems -= gems;
-  this.stars += stars;
 };
 
