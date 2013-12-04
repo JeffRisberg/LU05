@@ -81,7 +81,7 @@
     {id: "itemShield", url: R_ + "/images/scnShop/itemShield.png"},
     {id: "itemCombo", url: R_ + "/images/scnShop/itemCombo.png"},
     {id: "itemScoreDouble", url: R_ + "/images/scnShop/itemScoreDouble.png"},
-    {id: "itemPass100", url: R_ + "/images/scnShop/itemPass100.png"},
+    {id: "itemPass100", url: R_ + "/images/scnShop/itemPass100.png"}
 
   ];
 

@@ -1,8 +1,10 @@
 /**
  * The <i>UserPanel</i> is a display component that shows the player name, basic scores, and amount
- * of money.  This component is created once and moved from scene to scene.
+ * of money.  This component is created once and moved from scene to scene.  This component is also
+ * a good example of combining the display component classes we have written, such as Gauge and
+ * ProgressBar
  *
- * @author Linghua Jin
+ * @author Linghua Jin, Jeff, Spoorthy
  * @since March 2013
  */
 function UserPanel(director) {
@@ -21,12 +23,13 @@ function UserPanel(director) {
   this.setBounds(0, 0, nameLevelCon.width, nameLevelCon.height);
   this.addChild(nameLevelCon);
 
-  // low energy indicator in a vertical container
+  // low energy indicator
   //this.lowEnergy = Util.createImageActorInBound(this.director, "needle", 0.25 * W_, 10 * sf, 100 * sf, 100 * sf);
   //this.addChild(this.lowEnergy )
 
-   this.gauge = new Gauge(this.director,0,100);
-   this.gauge.setLocation(0.25 * W_, 10 * sf);
+  this.gauge = new Gauge(this.director, 0, 100);
+  this.gauge.setLocation(0.25 * W_, 10 * sf);
+  this.addChild(this.gauge);
 
   // money indicator in a horizontal container
   var moneyGem = Util.createImageConInBound(this.director, "carrot", 0, 0, 80 * sf, 80 * sf);
@@ -34,8 +37,6 @@ function UserPanel(director) {
   var moneyCon = Util.createAlignContainerWithActor(false, [moneyGem, this.moneyGemText], 0);
   moneyCon.setLocation(0.35 * W_, 10 * sf);
   this.addChild(moneyCon);
-
-
 
   this.setLocation(160 * sf, 20 * sf);
 
@@ -64,11 +65,9 @@ UserPanel.prototype.resetAll = function (userInfo) {
   userInfo.experience.setProgressBar(this.progressBar);
 
   if (userInfo.money.getTotalGems() < 26) {
-    //this.lowEnergy.setVisible(true);
-    this.experienceTActor.setVisible(false); // should cause a "low carrots - get food" actor to appear
+    //this.lowEnergy.setVisible(true); //cause a "low carrots - get food" actor to appear
   } else {
-     //this.lowEnergy.setVisible(false);
-    this.experienceTActor.setVisible(true); // should cause a "low carrots - get food" actor to hide
+    //this.lowEnergy.setVisible(false); // cause a "low carrots - get food" actor to hide
   }
 };
 
