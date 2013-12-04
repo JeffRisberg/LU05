@@ -21,12 +21,18 @@ function UserPanel(director) {
   this.setBounds(0, 0, nameLevelCon.width, nameLevelCon.height);
   this.addChild(nameLevelCon);
 
+  // low energy indicator in a vertical container
+  this.lowEnergy = Util.createImageActorInBound(this.director, "lowEnergy", 0.25 * W_, 10 * sf, 50 * sf, 50 * sf);
+  this.addChild(this.lowEnergy )
+
   // money indicator in a horizontal container
   var moneyGem = Util.createImageConInBound(this.director, "carrot", 0, 0, 50 * sf, 50 * sf);
   this.moneyGemText = Util.createText("0", 40 * sf);
   var moneyCon = Util.createAlignContainerWithActor(false, [moneyGem, this.moneyGemText], 0);
   moneyCon.setLocation(0.35 * W_, 10 * sf);
   this.addChild(moneyCon);
+
+
 
   this.setLocation(160 * sf, 20 * sf);
 
@@ -50,14 +56,15 @@ UserPanel.prototype.resetAll = function (userInfo) {
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
 
   this.moneyGemText.setText("" + userInfo.money.getTotalGems());
-
   this.progressBar.setPercent(userInfo.experience.getCurrExpPercent());
   userInfo.experience.setExperienceTActor(this.experienceTActor);
   userInfo.experience.setProgressBar(this.progressBar);
 
   if (userInfo.money.getTotalGems() < 26) {
+    this.lowEnergy.setVisible(true);
     this.experienceTActor.setVisible(false); // should cause a "low carrots - get food" actor to appear
   } else {
+     this.lowEnergy.setVisible(false);
     this.experienceTActor.setVisible(true); // should cause a "low carrots - get food" actor to hide
   }
 };
