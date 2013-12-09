@@ -25,19 +25,19 @@ SceneMgr.prototype.conScore = function (parent) {
   //two btns
   var topX = W_ * 0.5;
   var topY = H_ * 0.35;
-  var buttonW = RBS_ * 3.2;
-  var buttonH = RBS_ * 0.9;
 
-  function goSongBookDo() {
-    if (that.audioMgr.isExam()) {
-      that.audioMgr.resetToLastSong();
-    }
+  function goEpisodeListDo() {
+    //if (that.audioMgr.isExam()) {
+    //  that.audioMgr.resetToLastSong();
+    //}
     destroyTopCon();
   }
 
-  var btnSongbook = that.createButtonConSwitchScene("btnBack", "scenePlay", topX, topY, buttonW, buttonH, goSongBookDo);
+  var btnPlay = that.createButtonConSwitchScene("btnBack", "scenePlay", topX, topY, RBS_, RBS_, goEpisodeListDo);
 
-  var buttonsCon = Util.createAlignContainerWithActor(VERTICAL, [btnSongbook]);
+  var btnRestart = that.createButtonConSwitchScene("btnGo", "sceneLoad", topX, topY + RBS_ + 10 * sf, RBS_, RBS_, destroyTopCon);
+
+  var buttonsCon = Util.createAlignContainerWithActor(VERTICAL, [btnRestart, btnPlay]);
 
   // create initial star container
   var starCon;
@@ -88,13 +88,13 @@ SceneMgr.prototype.conScore = function (parent) {
   function getStarLevel(currentScore) {
     //var maxScore = that.bestScoreMgr.getMaxScore();
     //if (isPlayDead() || currentScore == 0) {
-      //return 0;
+    //return 0;
     //}
     //if (currentScore < maxScore * 0.65) {
-      //return 1;
+    //return 1;
     //}
     //if (currentScore < maxScore * 0.95) {
-      //return 2;
+    //return 2;
     //}
 
     return 3;

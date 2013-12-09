@@ -33,45 +33,60 @@ function EpisodeMgr() {
   function init() {
     var that = this;
 
-    var song1 = {"bg": "sky",
-      "bgImg": "africa",
-      "length": 63,
-      "songTitle": "Fluffing a Duck",
-      "author": "Music by Kevin MacLeod"};
-
-    var song2 = { "bg": "forestNight",
-      "bgImg": "forest",
-      "length": 35,
-      "songTitle": "Jingle Bell",
+    var episode1 = {
+      "id": 1,
+      "name": "Attack the Troll",
+      "description": "The troll is easy to kill",
+      "avgGain": 300,
       "price": 3,
-      "author": "Music by Kevin MacLeod"
+      "background": "sky",
+      "music": "Fluffing a Duck"
     };
 
-    var songList = {}
+    var episode2 = {
+      "id": 2,
+      "name": "Attack the Ogre",
+      "description": "The ogre is medium to kill",
+      "avgGain": 900,
+      "price": 3,
+      "background": "forestNight",
+      "music": "Jingle Bell"
+    };
 
-    songList.FluffingADuck = song1;
-    songList.JingleBell = song2;
+    var episode3 = {
+      "id": 3,
+      "name": "Attack the Dragon",
+      "description": "The dragon is hard to kill",
+      "avgGain": 1500,
+      "price": 3,
+      "background": "forestNight",
+      "music": "Jingle Bell"
+    };
 
-    episodeInfo_ = songList;
+    var epiList = [];
+
+    epiList.push(episode1);
+    epiList.push(episode2);
+    epiList.push(episode3);
+
+    episodeList_ = epiList;
+    episodeInfo_ = Util.createHashFromArray(episodeList_, "name");
+    setEpisodeNameList();
   }
 
-  // create episode name list array in order
+// create episode name list array in order
   function setEpisodeNameList() {
     for (var arrayIndex in episodeList_) {
       var episodeInfo = episodeList_[arrayIndex];
 
       episodeNameToID_[episodeInfo.name] = episodeInfo.id;
-      if (episodeInfo.hasOwnProperty("isLicense")) {
-        // not regular episode, skip
-        continue;
-      }
       episodeNameList_.push(episodeInfo.name);
     }
   }
 
-  /////////////////////////
-  // public functions
-  /////////////////////////
+/////////////////////////
+// public functions
+/////////////////////////
 
   this.setIndex = function (episodeName) {
     if (DEBUG_.episodeMgr) {
@@ -82,7 +97,7 @@ function EpisodeMgr() {
     currentSongName_ = currentEpisodeInfo_.music;
   };
 
-  // reset to previous episode choice
+// reset to previous episode choice
   this.resetToLastEpisode = function () {
     this.setDifficulty(lastDifficulty_);
     this.setIndex(lastEpisodeName_);

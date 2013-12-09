@@ -33,6 +33,15 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     scene.addChild(bumpDownBtn);
   }
 
+  var episodeList = that.episodeMgr.getEpisodeList();
+  var i;
+  for (i in episodeList) {
+    console.log(i);
+    var episode = episodeList[i];
+    console.log(episode.name);
+  }
+
+  // replace these with a loop over the episodes
   function attackTroll() {
     that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
     //that.userPanel.resetAll(that.userInfo);
