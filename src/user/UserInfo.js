@@ -4,13 +4,13 @@
  * @author Linghua Jin
  * @since February 2013
  */
-function UserInfo(director) {
+function UserInfo(director, sceneMgr) {
   this.userId = undefined;
   this.lock = new LockMgr(director);
 
   this.experience = new UserExperience();
   this.money = new UserMoney();
-  //this.gameScore = new UserGameScore();
+  this.episodeScore = new UserEpisodeScore(sceneMgr.episodeMgr);
   //this.achievement= new AchievementMgr(director, this.money);
   this.settings = new Settings();
   this.equip = new UserEquip(this.lock);

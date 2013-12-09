@@ -2,43 +2,25 @@
 function SceneMgr(director) {
   this.director = director;
 
-  var episodeInfo_;  // store all episodes in hash
-
   this.sceneNameToIndex = {};
   this.sceneNameToScene = {};
   this.sceneIndexToName = {};
 
-  this.userInfo = new UserInfo(director);
+  this.userInfo = new UserInfo(director, this);
   this.userInfo.userId = "User123";
   this.userInfo.initOthers();
   this.audioMgr = new AudioMgr();
+  this.episodeMgr = new EpisodeMgr();
   this.userPanel = new UserPanel(director);
   this.userPanel.resetAll(this.userInfo);
 
   var that = this;
+  // create global hpBar data for BestScoreMgr and ConScore
+  that.hpBar = new ProgressBar(this.director);
+
   init();
 
   function init() {
-    var song1 = {"bg": "sky",
-      "bgImg": "africa",
-      "length": 63,
-      "songTitle": "Fluffing a Duck",
-      "author": "Music by Kevin MacLeod"};
-
-    var song2 = { "bg": "forestNight",
-      "bgImg": "forest",
-      "length": 35,
-      "songTitle": "Jingle Bell",
-      "price": 3,
-      "author": "Music by Kevin MacLeod"
-    };
-
-    var songList = {}
-
-    songList.FluffingADuck = song1;
-    songList.JingleBell = song2;
-
-    episodeInfo_ = songList;
 
     // User init to default
     that.sceneResetUserToDefault();

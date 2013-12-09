@@ -34,8 +34,10 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   }
 
   function attackTroll() {
-    that.userInfo.experience.expChange(that, -5 + Math.floor(15 * Math.random()));
-    that.userPanel.resetAll(that.userInfo);
+    that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
   }
 
   var attackTrollBtn = Util.createButtonWithTextFun("Attack Troll", attackTroll);
@@ -43,8 +45,10 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   scene.addChild(attackTrollBtn);
 
   function attackOgre() {
-    that.userInfo.experience.expChange(that, -45 + Math.floor(150 * Math.random()));
-    that.userPanel.resetAll(that.userInfo);
+    that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
   }
 
   var attackOgreBtn = Util.createButtonWithTextFun("Attack Ogre", attackOgre);
@@ -52,8 +56,10 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   scene.addChild(attackOgreBtn);
 
   function attackDragon() {
-    that.userInfo.experience.expChange(that, -90 + Math.floor(200 * Math.random()));
-    that.userPanel.resetAll(that.userInfo);
+    that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
   }
 
   var attackDragonBtn = Util.createButtonWithTextFun("Attack Dragon", attackDragon);
@@ -63,7 +69,8 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   function resetExp() {
     var exp = that.userInfo.experience.getExp();
     that.userInfo.experience.expChange(that, -exp);
-    that.userPanel.resetAll(that.userInfo);
+    //that.userPanel.resetAll(that.userInfo);
+    scene.addChild(that.conScore(scene));
   }
 
   var resetExpBtn = Util.createButtonWithTextFun("Reset Exp", resetExp);

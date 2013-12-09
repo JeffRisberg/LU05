@@ -1,9 +1,16 @@
+/**
+ * The <i>ConScore</i> class is the container scene that appears at the end of play run, and indicates
+ * your results, including score, accuracy, level, and other information.
+ *
+ * @author nearly everyone has worked on this
+ * @since February 2013
+ */
 SceneMgr.prototype.conScore = function (parent) {
   var that = this;
   var topCon = that.createConBG();
   var userEquip = that.userInfo.equip;
   var userLicense = that.userInfo.license;
-  var userScore = that.userInfo.score;
+  var userEpisodeScore = that.userInfo.episodeScore;
 
   function destroyTopCon() {
     resetCurrentLevel();
@@ -28,11 +35,9 @@ SceneMgr.prototype.conScore = function (parent) {
     destroyTopCon();
   }
 
-  var btnSongbook = that.createButtonConSwitchScene("btnSongbook", "sceneEpisodeList", topX, topY, buttonW, buttonH, goSongBookDo);
+  var btnSongbook = that.createButtonConSwitchScene("btnBack", "scenePlay", topX, topY, buttonW, buttonH, goSongBookDo);
 
-  var btnRestart = that.createButtonConSwitchScene("btnRestart", "sceneLoad", topX, topY + buttonH + 10 * sf, buttonW, buttonH, destroyTopCon);
-
-  var buttonsCon = Util.createAlignContainerWithActor(VERTICAL, [btnRestart, btnSongbook]);
+  var buttonsCon = Util.createAlignContainerWithActor(VERTICAL, [btnSongbook]);
 
   // create initial star container
   var starCon;
@@ -45,15 +50,16 @@ SceneMgr.prototype.conScore = function (parent) {
     Util.destroyObj(starCon);
   }
 
+  // this actually indicates if you have earned enough to qualify for the next episode
   function isEnoughForNextLevel(level) {
     if (level >= 2) {
       return true;
     }
-    var maxCombo = that.audioMgr.getCurrentMaxCombo();
-    var bestCombo = userScore.getBest("comboUGS");
-    if (bestCombo > maxCombo * 0.6) {
-      return true;
-    }
+    //var maxCombo = that.audioMgr.getCurrentMaxCombo();
+    //var bestCombo = userScore.getBest("comboUGS");
+    //if (bestCombo > maxCombo * 0.6) {
+    //  return true;
+    //}
     return false;
   }
 
@@ -61,13 +67,13 @@ SceneMgr.prototype.conScore = function (parent) {
     if (addToParent == undefined) {
       addToParent = true;
     }
-    if (isEnoughForNextLevel(level) && that.audioMgr.getNextSongName()) {
-      if (!Util.isTrialVersion() || !that.audioMgr.isSongOnlyFullVersion(that.audioMgr.getNextSongName())) {
-        if (that.userInfo.lock.unlock(that.audioMgr.getNextSongName() + "_" + that.audioMgr.difficulty)) {
-          Util.popUpUnlock(that.director, that.audioMgr.getNextSongName(), that.audioMgr.getNextSongName());
-        }
-      }
-    }
+    //if (isEnoughForNextLevel(level) && that.audioMgr.getNextSongName()) {
+    //  if (!Util.isTrialVersion() || !that.audioMgr.isSongOnlyFullVersion(that.audioMgr.getNextSongName())) {
+    //    if (that.userInfo.lock.unlock(that.audioMgr.getNextSongName() + "_" + that.audioMgr.difficulty)) {
+    //      Util.popUpUnlock(that.director, that.audioMgr.getNextSongName(), that.audioMgr.getNextSongName());
+    //    }
+    //  }
+    //}
 
     starCon = Util.createStars(that.director, level);
     if (addToParent) {
@@ -92,7 +98,6 @@ SceneMgr.prototype.conScore = function (parent) {
     }
 
     return 3;
-
   }
 
   // score text
@@ -103,15 +108,8 @@ SceneMgr.prototype.conScore = function (parent) {
 
   // for panel
   var progressBar = this.userPanel.progressBar;
-  var userLevel = this.userInfo.level;
+  var userExperience = this.userInfo.experience;
   var userLevelText = this.userPanel.userLevelTActor;
-
-//  userLevelText.setLocation(w/2 - 200, 90);
-  /*
-   var levelCon = Util.createAlignContainerWithActor(false, [userLevelText, progressBar]);
-   scene.addChild(levelCon);
-   levelCon.centerAt(w/2, 100);
-   */
 
   var levelCount;
 
@@ -121,10 +119,10 @@ SceneMgr.prototype.conScore = function (parent) {
   }
 
   function resetCurrentLevel() {
-    levelCount = userLevel.getLevel();
+    levelCount = userExperience.getLevel();
     userLevelText.setText("Level " + levelCount);
     progressBar.actor.emptyBehaviorList();
-    progressBar.setPercent(userLevel.getCurrExpPercent());
+    progressBar.setPercent(userExperience.getCurrExpPercent());
   }
 
   function calcMoneyFromScore() {
@@ -135,13 +133,13 @@ SceneMgr.prototype.conScore = function (parent) {
     return earned;
   }
 
-  var currentScore = userScore.currentScore;
+  var currentScore = userEpisodeScore.currentScore;
   var earnedMoney = calcMoneyFromScore();
   if (isPlayDead()) {
     currentScore = 0;
     earnedMoney = 0;
   }
-  var currentAcc = (userScore.accAdded / (userScore.accNum == 0 ? 1 : userScore.accNum));
+  var currentAcc = (userEpisodeScore.accAdded / (userEpisodeScore.accNum == 0 ? 1 : userEpisodeScore.accNum));
 
   var rewardCon = null;
   // special for license
@@ -167,7 +165,6 @@ SceneMgr.prototype.conScore = function (parent) {
       } else {
         console.error("no current license");
       }
-
     }
   }
 
@@ -198,35 +195,24 @@ SceneMgr.prototype.conScore = function (parent) {
   };
   userEquip.applyTalentEffectEnd(target);
   currentScore = target.score;
-  var bestScore = userScore.getBestScore();
+  var bestScore = userEpisodeScore.getBestScore();
   if (currentScore > bestScore) {
-    userScore.setBestScore(currentScore, that.userInfo.facebookInfo.isLoggedIn());
+    userEpisodeScore.setBestScore(currentScore, that.userInfo.facebookInfo.isLoggedIn());
     textBestScore.setVisible(true);
-//    if (that.userInfo.facebookInfo.isLoggedIn() && that.userInfo.setting.getValue("turnOnFacebook")){
-//      var songInfo=that.audioMgr.getSongInfo();
-//      that.facebookInfo.publishAMessage("New Best Score: "+target.scoreText +" in "+songInfo.songTitle);
-//    }
   } else {
     textBestScore.setVisible(false);
   }
   textCurrScore.setText("Score: " + target.scoreText);
   textBestScore.setText("New Best Score");
 
-
-  // console.log(that.userInfo.setting.getGroupAsArray());
-
-  //when both facebook login and userset facebook post to be true, do the posting.
-
-
   // show average accuracy of this run
   textAcc.setText("Accuracy: " + target.accText + "%");
   textMoney.setText("Earned " + target.gemText + " " + GEM_UNIT);
 
-
   // panel content change
   resetCurrentLevel();
   that.userPanel.showInCurrentScene(topCon);
-  userLevel.expChange(parent, target.expEarn, levelUpFun);
+  userExperience.expChange(parent, target.expEarn, levelUpFun);
 
   // update money
   that.userInfo.money.addGems(earnedMoney);
@@ -239,11 +225,12 @@ SceneMgr.prototype.conScore = function (parent) {
       that.userInfo.achievement.checkAndUpdate("achTrueHacker", -target.acc, false);
     }
   }
+
   // stars
   removeStar();
   var starLevel = getStarLevel(currentScore);
   drawStarAndTryUnlock(starLevel);
-  userScore.checkAndSetCurrSongStar(starLevel);
+  userEpisodeScore.checkAndSetCurrSongStar(starLevel);
 
   // layout
   var scoreTextCon = Util.createAlignContainerWithActor(true,
@@ -255,5 +242,4 @@ SceneMgr.prototype.conScore = function (parent) {
   alignedConAll.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
   bgContainer.addChild(alignedConAll);
   return topCon;
-
 };
