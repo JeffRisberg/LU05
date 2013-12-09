@@ -86,16 +86,16 @@ SceneMgr.prototype.conScore = function (parent) {
   }
 
   function getStarLevel(currentScore) {
-    var maxScore = that.scoreMgr.getMaxScore();
-    if (isPlayDead() || currentScore == 0) {
-      return 0;
-    }
-    if (currentScore < maxScore * 0.65) {
-      return 1;
-    }
-    if (currentScore < maxScore * 0.95) {
-      return 2;
-    }
+    //var maxScore = that.bestScoreMgr.getMaxScore();
+    //if (isPlayDead() || currentScore == 0) {
+      //return 0;
+    //}
+    //if (currentScore < maxScore * 0.65) {
+      //return 1;
+    //}
+    //if (currentScore < maxScore * 0.95) {
+      //return 2;
+    //}
 
     return 3;
   }
@@ -230,7 +230,7 @@ SceneMgr.prototype.conScore = function (parent) {
   removeStar();
   var starLevel = getStarLevel(currentScore);
   drawStarAndTryUnlock(starLevel);
-  userEpisodeScore.checkAndSetCurrSongStar(starLevel);
+  //userEpisodeScore.checkAndSetCurrSongStar(starLevel);
 
 // layout
   var scoreTextCon = Util.createAlignContainerWithActor(true,
