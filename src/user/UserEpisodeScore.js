@@ -156,15 +156,18 @@ function UserEpisodeScore(episodeMgr) {
   }
 
   function getEpisodeValue(episodeInfo, difficulty, type) {
-    return parseInt(that.getValue(getPathFull(episodeInfo.name, difficulty, type))) || 0;
+    //return parseInt(that.getValue(getPathFull(episodeInfo.name, difficulty, type))) || 0;
+    return 0;
   }
 
   function getPathSuffixNoType(episodeInfo, difficulty) {
-    return (episodeInfo.name + "_" + difficulty);
+    //return (episodeInfo.name + "_" + difficulty);
+    return 0;
   }
 
   function getPathFull(episodeInfo, difficulty, type) {
-    return getPathSuffixNoType(episodeInfo, difficulty) + "_" + type;
+    //return getPathSuffixNoType(episodeInfo, difficulty) + "_" + type;
+    return 0;
   }
 }
 

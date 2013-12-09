@@ -49,6 +49,7 @@ UserExperience.prototype.expChange = function (scene, expDelta, levelUpFunc) {
   // reset lastBehavior for more robust
   this.progressBar.lastBehavior = null;
   // process exp inc, multiple level up may occur
+  var count = 0;
   while (1) {
 
     nextLevel++;
@@ -65,6 +66,11 @@ UserExperience.prototype.expChange = function (scene, expDelta, levelUpFunc) {
     // level up
     this.progressBar.setPercentAnimation(scene, fromPoint, 1, levelUpFunc);
     fromPoint = 0;
+
+    count = count + 1;
+    if (count > 10) {
+      break;
+    }
   }
 
   var newLevel = nextLevel - 1;

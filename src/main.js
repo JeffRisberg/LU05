@@ -36,6 +36,8 @@
     {id: "bgContainer", url: R_ + "/images/bgContainer.png"},
     {id: "bgFlat", url: R_ + "/images/bgFlat.png"},
     {id: "bgNotification", url: R_ + "/images/bgNotification.png"},
+    {id: "starEmpty", url: R_ + "/images/starEmpty.png"},
+    {id: "starFull", url: R_ + "/images/starFull.png"},
 
     {id: "scnInitialBg", url: R_ + "/images/scnInitial/bg.png"},
     {id: "logoUpper", url: R_ + "/images/scnInitial/logoUpper.png"},

@@ -143,30 +143,30 @@ SceneMgr.prototype.conScore = function (parent) {
 
   var rewardCon = null;
   // special for license
-  if (that.audioMgr.isExam()) {
-    btnRestart.childrenList[0].setVisible(false);
-    if (that.gameMgr.isWholeRunEnd) {
+  //if (that.audioMgr.isExam()) {
+  //  btnRestart.childrenList[0].setVisible(false);
+  //  if (that.gameMgr.isWholeRunEnd) {
 
-      var currLicenseObj = userLicense.getCurrentChallengeLicenseObj();
-      if (currLicenseObj) {
-        if (currLicenseObj.acc <= currentAcc) {
-          userLicense.passedCurrent();
-          var licenseName = userLicense.getHighestLicense();
-          var bunnyType = "rabbitNormal";
-          if (licenseName) {
-            bunnyType = "bunny" + licenseName;
-          }
-          new PopUp(that.director, Util.getCurrentConOrScene(that.director), " Congrats: passed", bunnyType)
-        } else {
-          new PopUp(that.director, Util.getCurrentConOrScene(that.director),
-            " Failed: Accuracy need to be more than " + currLicenseObj.acc + "%",
-            "rabbitSad");
-        }
-      } else {
-        console.error("no current license");
-      }
-    }
-  }
+  //    var currLicenseObj = userLicense.getCurrentChallengeLicenseObj();
+  //    if (currLicenseObj) {
+  //      if (currLicenseObj.acc <= currentAcc) {
+  //        userLicense.passedCurrent();
+  //        var licenseName = userLicense.getHighestLicense();
+  //        var bunnyType = "rabbitNormal";
+  //        if (licenseName) {
+  //          bunnyType = "bunny" + licenseName;
+  //        }
+  //        new PopUp(that.director, Util.getCurrentConOrScene(that.director), " Congrats: passed", bunnyType)
+  //      } else {
+  //        new PopUp(that.director, Util.getCurrentConOrScene(that.director),
+  //          " Failed: Accuracy need to be more than " + currLicenseObj.acc + "%",
+  //          "rabbitSad");
+  //      }
+  //    } else {
+  //      console.error("no current license");
+  //    }
+  //}
+  //}
 
   if (!isPlayDead() && !that.audioMgr.isExam()) {
     // added reward item
@@ -183,7 +183,7 @@ SceneMgr.prototype.conScore = function (parent) {
     expEarn *= 1000;
   }
 
-  // apply talent
+// apply talent
   var target = {
     expEarn: expEarn,
     gemEarn: earnedMoney,
@@ -205,19 +205,19 @@ SceneMgr.prototype.conScore = function (parent) {
   textCurrScore.setText("Score: " + target.scoreText);
   textBestScore.setText("New Best Score");
 
-  // show average accuracy of this run
+// show average accuracy of this run
   textAcc.setText("Accuracy: " + target.accText + "%");
   textMoney.setText("Earned " + target.gemText + " " + GEM_UNIT);
 
-  // panel content change
+// panel content change
   resetCurrentLevel();
   that.userPanel.showInCurrentScene(topCon);
   userExperience.expChange(parent, target.expEarn, levelUpFun);
 
-  // update money
+// update money
   that.userInfo.money.addGems(earnedMoney);
 
-  // update achievement and best score
+// update achievement and best score
   if (!isPlayDead()) {
     that.userInfo.achievement.checkAndUpdate("highScore", currentScore, false);
     that.userInfo.achievement.checkAndUpdate("highAcc", target.acc, false);
@@ -226,20 +226,21 @@ SceneMgr.prototype.conScore = function (parent) {
     }
   }
 
-  // stars
+// stars
   removeStar();
   var starLevel = getStarLevel(currentScore);
   drawStarAndTryUnlock(starLevel);
   userEpisodeScore.checkAndSetCurrSongStar(starLevel);
 
-  // layout
+// layout
   var scoreTextCon = Util.createAlignContainerWithActor(true,
     [textAcc, textCurrScore, textBestScore, textMoney, rewardCon]);
   var scoreCon = Util.createAlignContainerWithActor(VERTICAL, [starConWrapper, scoreTextCon]);
 
-  // top level layout
+// top level layout
   var alignedConAll = Util.createAlignContainerWithActor(HORIZONTAL, [scoreCon, buttonsCon]);
   alignedConAll.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
   bgContainer.addChild(alignedConAll);
   return topCon;
-};
+}
+;
