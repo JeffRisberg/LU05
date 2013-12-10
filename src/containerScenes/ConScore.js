@@ -13,8 +13,10 @@ SceneMgr.prototype.conScore = function (parent) {
   var userEpisodeScore = that.userInfo.episodeScore;
 
   function destroyTopCon() {
+    that.userPanel.showOffCurrentScene();
     Util.destroyObj(topCon);
     that.conReturnCommonDo();
+    that.sceneNameToScene['scenePlay'].backFromCon();
   }
 
   var goBackButton = Util.createButtonConWithImageFunInBound(that.director, "btnBack", destroyTopCon, 10 * sf, 10 * sf, RBS_, RBS_);

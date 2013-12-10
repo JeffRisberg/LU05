@@ -13,13 +13,12 @@ function UserPanel(director) {
 
   // name and level indicators in a vertical container
   this.userNameTActor = Util.createText("Name", 30 * sf);
-  this.experienceTActor = Util.createText("Experience", 30 * sf);
   this.userLevelTActor = Util.createText("Lv", 20 * sf);
   this.progressBar = new ProgressBar(this.director).setImage("progressBarCt", 220 * sf, 30 * sf);
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
   this.progressBar.addChild(this.userLevelTActor);
   var nameLevelCon = Util.createAlignContainerWithActor(true,
-    [this.userNameTActor, this.experienceTActor, this.progressBar], 10 * sf);
+    [this.userNameTActor, this.progressBar], 10 * sf);
   this.setBounds(0, 0, nameLevelCon.width, nameLevelCon.height);
   this.addChild(nameLevelCon);
 
@@ -55,13 +54,11 @@ UserPanel.prototype.resetAll = function (userInfo) {
     console.error("No Username in UserPanel");
   }
   this.userNameTActor.setText(userInfo.userName);
-  this.experienceTActor.setText("Exp: " + userInfo.experience.getExp());
   this.userLevelTActor.setText("Level " + userInfo.experience.getLevel());
   this.userLevelTActor.centerAt(this.progressBar.width / 2, this.progressBar.height / 2);
 
   this.moneyGemText.setText("" + userInfo.money.getTotalGems());
   this.progressBar.setPercent(userInfo.experience.getCurrExpPercent());
-  userInfo.experience.setExperienceTActor(this.experienceTActor);
   userInfo.experience.setProgressBar(this.progressBar);
 
   if (userInfo.money.getTotalGems() < 26) {

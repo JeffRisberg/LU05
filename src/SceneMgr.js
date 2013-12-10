@@ -43,7 +43,6 @@ SceneMgr.prototype.switchToIndex = function (index) {
   if (prevSceneId != this.sceneNameToIndex["sceneLoad"]) {
     this.prevSceneId = prevSceneId;
   }
-  var newScene = this.sceneNameToScene[index];
 
   this.director.switchToScene(index);
 };

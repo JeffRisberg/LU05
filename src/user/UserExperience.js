@@ -19,9 +19,6 @@ UserExperience.prototype.resetExperience = function () {
   this.setExp(0);
 };
 
-UserExperience.prototype.setExperienceTActor = function (experienceTActor) {
-  this.experienceTActor = experienceTActor;
-};
 UserExperience.prototype.setProgressBar = function (progressBar) {
   this.progressBar = progressBar;
 };

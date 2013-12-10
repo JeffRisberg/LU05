@@ -33,27 +33,6 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     scene.addChild(bumpDownBtn);
   }
 
-  function attack_the_troll() {
-    that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
-
-  function attack_the_ogre() {
-    that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
-
-  function attack_the_dragon() {
-    that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
-
   // Create button with text and pressDo function
   function createEpisodeButton(episodeInfo, pressDo) {
     var fontSize = 20 * sf;
@@ -63,7 +42,6 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     actor.setSize(fontSize * (text.length / 2) + 10, 30);
 
     actor.paint = function (director, time) {
-
       var ctx = director.ctx;
       ctx.save();
 
@@ -125,13 +103,19 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   scene.addChild(episodeBtnCon)
 
   /**
+   * Restore userPanel when we come back fron container scene
+   */
+  scene.backFromCon = function () {
+    that.userPanel.showInCurrentScene(scene);
+  };
+
+  /**
    * This is called by CAAT when the scene becomes the current scene
    */
   scene.activated = function () {
     that.commonDoWhenSceneStart();
 
     that.userPanel.showInCurrentScene(scene);
-
   };
 
   /**
