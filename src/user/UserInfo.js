@@ -38,7 +38,7 @@ UserInfo.prototype.initOthers = function () {
 };
 
 UserInfo.prototype.resetOthers = function () {
-  this.experience.resetLevel();
+  this.experience.resetExperience();
   this.money.resetMoney();
   this.lock.resetStorage();
   this.gameScore.resetValue();

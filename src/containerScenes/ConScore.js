@@ -26,10 +26,6 @@ SceneMgr.prototype.conScore = function (parent) {
   var bgContainer = Util.createImageConInBound(that.director, "bgFlat", bgX, 0.01 * H_, W_ - bgX, H_);
   topCon.addChild(bgContainer);
 
-  //two btns
-  var topX = W_ * 0.5;
-  var topY = H_ * 0.35;
-
   // create initial star container
   var starCon;
   drawStarAndTryUnlock(0, false);
@@ -54,7 +50,7 @@ SceneMgr.prototype.conScore = function (parent) {
     return false;
   }
 
-  function drawStarAndTryUnlock(level, addToParent) {//0,1,2,3
+  function drawStarAndTryUnlock(starCount, addToParent) {//0,1,2,3
     if (addToParent == undefined) {
       addToParent = true;
     }
@@ -66,17 +62,18 @@ SceneMgr.prototype.conScore = function (parent) {
     //  }
     //}
 
-    starCon = Util.createStars(that.director, level);
+    starCon = Util.createStars(that.director, statCount);
     if (addToParent) {
       starConWrapper.addChild(starCon);
     }
   }
 
   function isPlayDead() {
-    return (that.hpBar.getPercent() <= 0);
+    //return (that.hpBar.getPercent() <= 0);
+    return false;
   }
 
-  function getStarLevel(currentScore) {
+  function getStarCount(currentScore) {
     //var maxScore = that.bestScoreMgr.getMaxScore();
     //if (isPlayDead() || currentScore == 0) {
     //return 0;
@@ -110,8 +107,8 @@ SceneMgr.prototype.conScore = function (parent) {
   }
 
   function resetCurrentLevel() {
-    levelCount = userExperience.getLevel();
-    userLevelText.setText("Level " + levelCount);
+    levelValue = userExperience.getLevel();
+    userLevelText.setText("Level " + levelValue);
     progressBar.actor.emptyBehaviorList();
     progressBar.setPercent(userExperience.getCurrExpPercent());
   }
@@ -219,9 +216,9 @@ SceneMgr.prototype.conScore = function (parent) {
 
   // stars
   removeStar();
-  var starLevel = getStarLevel(currentScore);
-  drawStarAndTryUnlock(starLevel);
-  //userEpisodeScore.checkAndSetCurrSongStar(starLevel);
+  var starCount = getStarCount(currentScore);
+  drawStarAndTryUnlock(starCount);
+  //userEpisodeScore.checkAndSetCurrSongStar(starCount);
 
   // layout
   var scoreTextCon = Util.createAlignContainerWithActor(true,

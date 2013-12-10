@@ -8,15 +8,15 @@
 function UserExperience() {
 }
 
-UserExperience.prototype = new LocalStorageMgr("LEVEL");
+UserExperience.prototype = new LocalStorageMgr("EXPERIENCE");
 
 UserExperience.prototype.getExpByLevel = function (level) {
   return Math.floor(1618 * level + 618 * level * level + 0.618 * Math.pow(1.618, level));
 };
 
 UserExperience.prototype.resetExperience = function () {
-  this.setLevel(0);
   this.setExp(0);
+  this.setLevel(0);
 };
 
 UserExperience.prototype.setProgressBar = function (progressBar) {
@@ -78,6 +78,14 @@ UserExperience.prototype.expChange = function (scene, expDelta, levelUpFunc) {
   this.setExp(newExp);
 };
 
+UserExperience.prototype.setExp = function (exp) {
+  this.setValue(exp, "exp");
+};
+
+UserExperience.prototype.getExp = function () {
+  return parseInt(this.getValue("exp")) || 0;
+};
+
 UserExperience.prototype.setLevel = function (level) {
   this.setValue(level, "level");
 };
@@ -86,10 +94,8 @@ UserExperience.prototype.getLevel = function () {
   return parseInt(this.getValue("level")) || 0;
 };
 
-UserExperience.prototype.setExp = function (exp) {
-  this.setValue(exp, "exp");
-};
-
-UserExperience.prototype.getExp = function () {
-  return parseInt(this.getValue("exp")) || 0;
+UserExperience.prototype.getHpTotal = function () {
+  var level = this.getLevel();
+  var bloodTotal = 100 * ( 1 + level / 10);
+  return bloodTotal;
 };
