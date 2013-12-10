@@ -63,14 +63,15 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     var episodeList = that.episodeMgr.getEpisodeList();
     var i;
     var episodeBtn = [];
+
     for (i in episodeList) {
+        var episodeInfo = episodeList[i];
 
-        var episode = episodeList[i];
-       // callback function name translates to the name of episode with underscore
-        episodeBtn[i] =   Util.createButtonWithTextFun(episode.name,
-            eval((episode.name).replace(/\s+/g, '_').toLowerCase()), 120 * sf, 50 * sf) ;
+        function onClick(){
+                 console.log(episodeInfo.name);
+        }
 
-      console.log(episode.name);
+         episodeBtn[i] =   Util.createButtonWithTextFun(episodeInfo.name, onClick) ;
     }
 
     var episodeBtnCon = Util.createAlignContainerWithActor(true, episodeBtn, 20);
