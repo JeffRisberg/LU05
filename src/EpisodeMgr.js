@@ -142,4 +142,10 @@ function EpisodeMgr() {
   this.getDifficulty = function () {
     return 1;
   }
+
+  this.getMaxScore = function () {
+    var avgGain = currentEpisodeInfo_.avgGain;
+
+    return avgGain * 1.2;
+  };
 }

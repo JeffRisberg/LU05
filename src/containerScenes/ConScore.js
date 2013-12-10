@@ -69,22 +69,22 @@ SceneMgr.prototype.conScore = function (parent) {
     }
   }
 
-  function isPlayDead() {
+  function isPlayerDead() {
     //return (that.hpBar.getPercent() <= 0);
     return false;
   }
 
   function getStarCount(currentScore) {
-    //var maxScore = that.bestScoreMgr.getMaxScore();
-    //if (isPlayDead() || currentScore == 0) {
-    //return 0;
-    //}
-    //if (currentScore < maxScore * 0.65) {
-    //return 1;
-    //}
-    //if (currentScore < maxScore * 0.95) {
-    //return 2;
-    //}
+    maxScore = that.episodeMgr.getMaxScore();
+    if (isPlayerDead() || currentScore == 0) {
+      return 0;
+    }
+    if (currentScore < maxScore * 0.65) {
+      return 1;
+    }
+    if (currentScore < maxScore * 0.95) {
+      return 2;
+    }
 
     return 3;
   }
@@ -109,7 +109,7 @@ SceneMgr.prototype.conScore = function (parent) {
 
   var currentScore = userEpisodeScore.currentScore;
   var earnedMoney = Math.min(1, Math.round(currentScore / 500));
-  if (isPlayDead()) {
+  if (isPlayerDead()) {
     currentScore = 0;
     earnedMoney = 0;
   }
@@ -142,7 +142,7 @@ SceneMgr.prototype.conScore = function (parent) {
   //}
   //}
 
-  if (!isPlayDead() && !episodeMgr.isExam()) {
+  if (!isPlayerDead() && !episodeMgr.isExam()) {
     // added reward item
     var itemRewardImage = userEquip.randomAwardItem(1 + episodeMgr.getDifficulty() / 4 + currentScore / 20000);
     if (itemRewardImage) {
@@ -199,7 +199,7 @@ SceneMgr.prototype.conScore = function (parent) {
   that.userPanel.resetAll(that.userInfo);
 
   // update achievement and best score
-  if (!isPlayDead()) {
+  if (!isPlayerDead()) {
     //that.userInfo.achievement.checkAndUpdate("highScore", currentScore, false);
     //that.userInfo.achievement.checkAndUpdate("highAcc", target.acc, false);
 
