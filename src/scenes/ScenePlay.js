@@ -74,8 +74,8 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
   for (var i in episodeList) {
     var episodeInfo = episodeList[i];
 
-    function onClick(button) {
-      var episodeInfo = button.source.getEpisodeInfo();
+    function onClick(event) {
+      var episodeInfo = event.source.getEpisodeInfo();
       console.log(episodeInfo);
 
       that.episodeMgr.setIndex(episodeInfo.name);
