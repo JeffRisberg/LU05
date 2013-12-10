@@ -18,8 +18,7 @@ SceneMgr.prototype.conSettings = function (parent) {
   topCon.addChild(goBackButton);
 
   var bgX = goBackButton.x + RBS_ + 2 * sf;
-  var bgContainer = Util.createImageConInBound(that.director, "bgContainer", bgX, H_, W_ - bgX, H_);
-  bgContainer.setLocation(bgX, 0.01 * H_);
+  var bgContainer = Util.createImageConInBound(that.director, "bgContainer", bgX, 0.01 * H_, W_ - bgX, H_);
   topCon.addChild(bgContainer);
 
   var settingsFontSize = 40 * sf;

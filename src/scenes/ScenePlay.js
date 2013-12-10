@@ -33,61 +33,96 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     scene.addChild(bumpDownBtn);
   }
 
-    function attack_the_troll() {
-        that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
-        //that.userPanel.resetAll(that.userInfo);
-        // bring up conScore
-        scene.addChild(that.conScore(scene));
+  function attack_the_troll() {
+    that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
+  }
+
+  function attack_the_ogre() {
+    that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
+  }
+
+  function attack_the_dragon() {
+    that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
+    //that.userPanel.resetAll(that.userInfo);
+    // bring up conScore
+    scene.addChild(that.conScore(scene));
+  }
+
+  // Create button with text and pressDo function
+  function createEpisodeButton(episodeInfo, pressDo) {
+    var fontSize = 20 * sf;
+    var actor = new EpisodeActor(episodeInfo);
+    var text = episodeInfo.name;
+
+    actor.setSize(fontSize * (text.length / 2) + 10, 30);
+
+    actor.paint = function (director, time) {
+
+      var ctx = director.ctx;
+      ctx.save();
+
+      ctx.fillStyle = this.pointed ? 'orange' : 'green';
+      ctx.fillRect(0, 0, this.width, this.height);
+
+      ctx.strokeStyle = this.pointed ? 'red' : 'black';
+      ctx.strokeRect(0, 0, this.width, this.height);
+
+      ctx.strokeStyle = 'white';
+      ctx.font = fontSize + 'px sans-serif';
+
+      ctx.fillStyle = 'black';
+      ctx.fillText(text, 1, 22);
+
+      ctx.restore();
+    };
+
+    actor.mouseClick = pressDo;
+    actor.touchEnd = pressDo;
+
+    return actor;
+  }
+
+  var episodeList = that.episodeMgr.getEpisodeList();
+  var episodeBtns = [];
+
+  for (var i in episodeList) {
+    var episodeInfo = episodeList[i];
+
+    function onClick(button) {
+      var episodeInfo = button.source.getEpisodeInfo();
+
+      console.log(episodeInfo);
+      var avgGain = episodeInfo.avgGain;
+
+      var delta = avgGain * (0.8 + Math.random() * 0.4);
+      console.log(delta);
+
+      that.userInfo.experience.expChange(that, delta);
+      scene.addChild(that.conScore(scene));
     }
 
-
-
-    function attack_the_ogre() {
-        that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
-        //that.userPanel.resetAll(that.userInfo);
-        // bring up conScore
-        scene.addChild(that.conScore(scene));
-    }
-
-
-
-    function attack_the_dragon() {
-        that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
-        //that.userPanel.resetAll(that.userInfo);
-        // bring up conScore
-        scene.addChild(that.conScore(scene));
-    }
-
-  //
-
-    var episodeList = that.episodeMgr.getEpisodeList();
-    var i;
-    var episodeBtn = [];
-
-    for (i in episodeList) {
-        var episodeInfo = episodeList[i];
-
-        function onClick(){
-                 console.log(episodeInfo.name);
-        }
-
-         episodeBtn[i] =   Util.createButtonWithTextFun(episodeInfo.name, onClick) ;
-    }
-
-    var episodeBtnCon = Util.createAlignContainerWithActor(true, episodeBtn, 20);
-    episodeBtnCon.setLocation(W_ * 0.5, H_ * 0.5);
-    scene.addChild(episodeBtnCon)
+    var btn = createEpisodeButton(episodeInfo, onClick);
+    episodeBtns.push(btn);
+  }
 
   function resetExp() {
     var exp = that.userInfo.experience.getExp();
     that.userInfo.experience.expChange(that, -exp);
-    //that.userPanel.resetAll(that.userInfo);
-    scene.addChild(that.conScore(scene));
+    that.userPanel.resetAll(that.userInfo);
   }
 
   var resetExpBtn = Util.createButtonWithTextFun("Reset Exp", resetExp);
-  resetExpBtn.setLocation(W_ * 0.5, H_ * 0.5 + 150);
-  scene.addChild(resetExpBtn);
+  episodeBtns.push(resetExpBtn);
+
+  var episodeBtnCon = Util.createAlignContainerWithActor(false, episodeBtns, 20);
+  episodeBtnCon.setLocation(W_ * 0.25, H_ * 0.5);
+  scene.addChild(episodeBtnCon)
 
   /**
    * This is called by CAAT when the scene becomes the current scene

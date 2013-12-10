@@ -13,31 +13,20 @@ SceneMgr.prototype.conScore = function (parent) {
   var userEpisodeScore = that.userInfo.episodeScore;
 
   function destroyTopCon() {
-    resetCurrentLevel();
-    that.userPanel.showOffCurrentScene();
     Util.destroyObj(topCon);
     that.conReturnCommonDo();
   }
 
-  var bgContainer = Util.createImageConInBound(that.director, "", 0.2 * W_, 0.2 * H_, W_ * 0.7, H_ * 0.7);
+  var goBackButton = Util.createButtonConWithImageFunInBound(that.director, "btnBack", destroyTopCon, 10 * sf, 10 * sf, RBS_, RBS_);
+  topCon.addChild(goBackButton);
+
+  var bgX = goBackButton.x + RBS_ + 2 * sf;
+  var bgContainer = Util.createImageConInBound(that.director, "bgFlat", bgX, 0.01 * H_, W_ - bgX, H_);
   topCon.addChild(bgContainer);
 
   //two btns
   var topX = W_ * 0.5;
   var topY = H_ * 0.35;
-
-  function goEpisodeListDo() {
-    //if (that.audioMgr.isExam()) {
-    //  that.audioMgr.resetToLastSong();
-    //}
-    destroyTopCon();
-  }
-
-  var btnPlay = that.createButtonConSwitchScene("btnBack", "scenePlay", topX, topY, RBS_, RBS_, goEpisodeListDo);
-
-  var btnRestart = that.createButtonConSwitchScene("btnGo", "sceneLoad", topX, topY + RBS_ + 10 * sf, RBS_, RBS_, destroyTopCon);
-
-  var buttonsCon = Util.createAlignContainerWithActor(VERTICAL, [btnRestart, btnPlay]);
 
   // create initial star container
   var starCon;
@@ -226,21 +215,18 @@ SceneMgr.prototype.conScore = function (parent) {
     }
   }
 
-// stars
+  // stars
   removeStar();
   var starLevel = getStarLevel(currentScore);
   drawStarAndTryUnlock(starLevel);
   //userEpisodeScore.checkAndSetCurrSongStar(starLevel);
 
-// layout
+  // layout
   var scoreTextCon = Util.createAlignContainerWithActor(true,
     [textAcc, textCurrScore, textBestScore, textMoney, rewardCon]);
   var scoreCon = Util.createAlignContainerWithActor(VERTICAL, [starConWrapper, scoreTextCon]);
 
-// top level layout
-  var alignedConAll = Util.createAlignContainerWithActor(HORIZONTAL, [scoreCon, buttonsCon]);
-  alignedConAll.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
-  bgContainer.addChild(alignedConAll);
+  scoreCon.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
+  bgContainer.addChild(scoreCon);
   return topCon;
-}
-;
+};
