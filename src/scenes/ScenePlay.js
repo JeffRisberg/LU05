@@ -33,47 +33,49 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
     scene.addChild(bumpDownBtn);
   }
 
-  var episodeList = that.episodeMgr.getEpisodeList();
-  var i;
-  for (i in episodeList) {
-    console.log(i);
-    var episode = episodeList[i];
-    console.log(episode.name);
-  }
+    function attack_the_troll() {
+        that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
+        //that.userPanel.resetAll(that.userInfo);
+        // bring up conScore
+        scene.addChild(that.conScore(scene));
+    }
 
-  // replace these with a loop over the episodes
-  function attackTroll() {
-    that.userInfo.experience.expChange(that, -50 + Math.floor(150 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
 
-  var attackTrollBtn = Util.createButtonWithTextFun("Attack Troll", attackTroll);
-  attackTrollBtn.setLocation(W_ * 0.5, H_ * 0.5);
-  scene.addChild(attackTrollBtn);
 
-  function attackOgre() {
-    that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
+    function attack_the_ogre() {
+        that.userInfo.experience.expChange(that, -450 + Math.floor(1500 * Math.random()));
+        //that.userPanel.resetAll(that.userInfo);
+        // bring up conScore
+        scene.addChild(that.conScore(scene));
+    }
 
-  var attackOgreBtn = Util.createButtonWithTextFun("Attack Ogre", attackOgre);
-  attackOgreBtn.setLocation(W_ * 0.5, H_ * 0.5 + 40);
-  scene.addChild(attackOgreBtn);
 
-  function attackDragon() {
-    that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
-    //that.userPanel.resetAll(that.userInfo);
-    // bring up conScore
-    scene.addChild(that.conScore(scene));
-  }
 
-  var attackDragonBtn = Util.createButtonWithTextFun("Attack Dragon", attackDragon);
-  attackDragonBtn.setLocation(W_ * 0.5, H_ * 0.5 + 80);
-  scene.addChild(attackDragonBtn);
+    function attack_the_dragon() {
+        that.userInfo.experience.expChange(that, -900 + Math.floor(2000 * Math.random()));
+        //that.userPanel.resetAll(that.userInfo);
+        // bring up conScore
+        scene.addChild(that.conScore(scene));
+    }
+
+  //
+
+    var episodeList = that.episodeMgr.getEpisodeList();
+    var i;
+    var episodeBtn = [];
+    for (i in episodeList) {
+
+        var episode = episodeList[i];
+       // callback function name translates to the name of episode with underscore
+        episodeBtn[i] =   Util.createButtonWithTextFun(episode.name,
+            eval((episode.name).replace(/\s+/g, '_').toLowerCase()), 120 * sf, 50 * sf) ;
+
+      console.log(episode.name);
+    }
+
+    var episodeBtnCon = Util.createAlignContainerWithActor(true, episodeBtn, 20);
+    episodeBtnCon.setLocation(W_ * 0.5, H_ * 0.5);
+    scene.addChild(episodeBtnCon)
 
   function resetExp() {
     var exp = that.userInfo.experience.getExp();
