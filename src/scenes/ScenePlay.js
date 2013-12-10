@@ -1,10 +1,12 @@
 /**
- * The Play scene is a similar selector of an episode, and also updates user info.
+ * The Play scene is a subset of the EpisodeList scene, with a simple version of the 'game play'
+ * functionality (i.e, you get a score for carrying out an Episode).
  *
  * @param sceneName
  */
 SceneMgr.prototype.addScenePlay = function (sceneName) {
   var that = this;
+  this.userEpisodeScore = that.userInfo.episodeScore;
 
   var scene = this.createEmptyScene(sceneName);
   this.addBG(scene, "scnProfileBg");
@@ -76,12 +78,17 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
       var episodeInfo = button.source.getEpisodeInfo();
 
       console.log(episodeInfo);
-      var avgGain = episodeInfo.avgGain;
 
-      var delta = avgGain * (0.8 + Math.random() * 0.4);
-      console.log(delta);
+      // the lines below generate random values based on episode parameters
+      var avgScore = episodeInfo.avgGain;
+      var score = Math.floor(avgScore * (0.8 + Math.random() * 0.4));
+      console.log("score=", score);
 
-      that.userInfo.experience.expChange(that, delta);
+      that.userEpisodeScore.currentScore = score;
+      that.userEpisodeScore.accAdded = 100 * Math.random();
+      that.userEpisodeScore.accNum = 1;
+
+      // when the conScore is activated, this starts an animated change of experience and level indicator
       scene.addChild(that.conScore(scene));
     }
 

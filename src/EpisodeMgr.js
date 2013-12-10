@@ -36,8 +36,8 @@ function EpisodeMgr() {
     var episode1 = {
       "id": 1,
       "name": "Attack the Troll",
+      "avgGain": 100,
       "description": "The troll is easy to kill",
-      "avgGain": 300,
       "price": 3,
       "background": "sky",
       "music": "Fluffing a Duck"
@@ -46,8 +46,8 @@ function EpisodeMgr() {
     var episode2 = {
       "id": 2,
       "name": "Attack the Ogre",
+      "avgGain": 400,
       "description": "The ogre is medium to kill",
-      "avgGain": 900,
       "price": 3,
       "background": "forestNight",
       "music": "Jingle Bell"
@@ -56,8 +56,8 @@ function EpisodeMgr() {
     var episode3 = {
       "id": 3,
       "name": "Attack the Dragon",
+      "avgGain": 700,
       "description": "The dragon is hard to kill",
-      "avgGain": 1500,
       "price": 3,
       "background": "forestNight",
       "music": "Jingle Bell"
@@ -134,4 +134,12 @@ function EpisodeMgr() {
   this.getCurrentEpisodeName = function () {
     return currentEpisodeName_;
   };
+
+  this.isExam = function () {
+    return false;
+  }
+
+  this.getDifficulty = function () {
+    return 1;
+  }
 }

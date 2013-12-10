@@ -6,11 +6,13 @@ function SceneMgr(director) {
   this.sceneNameToScene = {};
   this.sceneIndexToName = {};
 
+  this.audioMgr = new AudioMgr();
+  this.episodeMgr = new EpisodeMgr();
+
   this.userInfo = new UserInfo(director, this);
   this.userInfo.userId = "User123";
   this.userInfo.initOthers();
-  this.audioMgr = new AudioMgr();
-  this.episodeMgr = new EpisodeMgr();
+
   this.userPanel = new UserPanel(director);
   this.userPanel.resetAll(this.userInfo);
 

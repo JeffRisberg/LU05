@@ -64,7 +64,7 @@ function Settings() {
     localStorage.setItem(this.prefix + "_" + item, value);
   };
 
-  this.resetAllSetting = function () {
+  this.resetAllSettings = function () {
     for (var eachGroup in groupDefaultHash_) {
       this.setValue(groupDefaultHash_[eachGroup].defaultValue, eachGroup);
     }

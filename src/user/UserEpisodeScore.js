@@ -7,7 +7,7 @@
  */
 function UserEpisodeScore(episodeMgr) {
   var that = this;
-  var episodeMgr_ = episodeMgr;
+  this.episodeMgr = episodeMgr;
 
   this.difficultyRange = [0, 1, 2];
 
@@ -26,6 +26,7 @@ function UserEpisodeScore(episodeMgr) {
   var bestValue_ = {
     comboUGS: 1
   };
+  this.isAllCombo = false;
 
   /** change one selector field */
   this.setEpisodeInfo = function (episodeInfo) {
@@ -126,8 +127,8 @@ function UserEpisodeScore(episodeMgr) {
   /**
    * Clear out all scores, actually set them to zero
    */
-  this.resetValue = function () {
-    var episodeList = episodeMgr.getEpisodeList()
+  this.resetValues = function () {
+    var episodeList = that.episodeMgr.getEpisodeList()
     for (var i in episodeList) {
       var episodeInfo = episodeList[i];
 

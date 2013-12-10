@@ -98,6 +98,7 @@ SceneMgr.prototype.conSettings = function (parent) {
   if (DEBUG_.additionalButton) {
     function resetDo() {
       that.userInfo.resetOthers();
+      that.userPanel.resetAll(that.userInfo);
       that.audioMgr.resetBgAudio();
     }
 

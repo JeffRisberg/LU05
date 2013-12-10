@@ -7,27 +7,28 @@
 function UserInfo(director, sceneMgr) {
   this.userId = undefined;
   this.lock = new LockMgr(director);
-
-  this.experience = new UserExperience();
-  this.money = new UserMoney();
-  this.episodeScore = new UserEpisodeScore(sceneMgr.episodeMgr);
-  //this.achievement= new AchievementMgr(director, this.money);
   this.settings = new Settings();
+
+  this.money = new UserMoney();
+  this.experience = new UserExperience();
+  this.episodeScore = new UserEpisodeScore(sceneMgr.episodeMgr);
+  //this.achievement = new AchievementMgr(director, this.money);
   this.equip = new UserEquip(this.lock);
   this.character = new UserCharacter(this.lock);
 
   this.groupTogether = [
-    this.lock, this.experience, this.money,
-    this.settings, this.equip,
-    this.character
+    this.lock, this.settings, this.money, this.experience, this.episodeScore,
+    this.equip, this.character
   ];
 
   this.init();
+  this.initOthers();
 }
 
 UserInfo.prototype.init = function () {
   this.isLoggedIn = false;
   this.userName = "Bilbo Baggins";
+  this.userId = "User456";
 };
 
 UserInfo.prototype.initOthers = function () {
@@ -38,11 +39,11 @@ UserInfo.prototype.initOthers = function () {
 };
 
 UserInfo.prototype.resetOthers = function () {
-  this.experience.resetExperience();
   this.money.resetMoney();
+  this.experience.resetExperience();
   this.lock.resetStorage();
-  this.gameScore.resetValue();
-  this.setting.resetAllSetting();
+  this.episodeScore.resetValues();
+  this.settings.resetAllSettings();
 
   this.equip.resetEquip();
   this.character.resetCharacter();

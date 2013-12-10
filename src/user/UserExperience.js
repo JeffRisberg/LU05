@@ -37,45 +37,47 @@ UserExperience.prototype.calcExpPercent = function (exp, nextLevel) {
 
 UserExperience.prototype.expChange = function (scene, expDelta, levelUpFunc) {
   var that = this;
-  var currentLevel = this.getLevel();
   var currentExp = this.getExp();
+  var currentLevel = this.getLevel();
+
   var fromPoint = that.calcExpPercent(currentExp, currentLevel + 1);
   var newExp = currentExp + expDelta;
   var nextLevel = currentLevel;
+  if (DEBUG_.userAtt) {
+    console.log("newExp=" + newExp + ", currentLevel=" + currentLevel);
+  }
 
   // reset lastBehavior for more robust
   this.progressBar.lastBehavior = null;
-  // process exp inc, multiple level up may occur
-  var count = 0;
-  while (1) {
 
+  // process newExp, multiple level up may occur
+  while (1) {
     nextLevel++;
     var nextExpLevelUp = this.getExpByLevel(nextLevel);
-    var toPoint;
+    if (DEBUG_.userAtt) {
+      console.log("nextLevel=" + nextLevel + ", nextLevelExpRequired=" + nextExpLevelUp);
+    }
 
-    // exp inc is within this level, we are done
+    // newExp is within this level, we are done
     if (newExp < nextExpLevelUp) {
-      toPoint = that.calcExpPercent(newExp, nextLevel);
+      var toPoint = that.calcExpPercent(newExp, nextLevel);
       this.progressBar.setPercentAnimation(scene, fromPoint, toPoint);
       break;
     }
 
     // level up
-    this.progressBar.setPercentAnimation(scene, fromPoint, 1, levelUpFunc);
+    this.progressBar.setPercentAnimation(scene, fromPoint, 1.0, levelUpFunc);
     fromPoint = 0;
-
-    count = count + 1;
-    if (count > 10) {
-      break;
-    }
   }
 
+  this.setExp(newExp);
+
   var newLevel = nextLevel - 1;
+  console.log("newLevel=" + newLevel);
   if (newLevel != currentLevel) {
     // leveled up, update it
     this.setLevel(newLevel);
   }
-  this.setExp(newExp);
 };
 
 UserExperience.prototype.setExp = function (exp) {

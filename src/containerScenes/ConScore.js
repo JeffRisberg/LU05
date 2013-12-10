@@ -11,6 +11,7 @@ SceneMgr.prototype.conScore = function (parent) {
   var userEquip = that.userInfo.equip;
   var userLicense = that.userInfo.license;
   var userEpisodeScore = that.userInfo.episodeScore;
+  var episodeMgr = that.episodeMgr;
 
   function destroyTopCon() {
     that.userPanel.showOffCurrentScene();
@@ -42,7 +43,7 @@ SceneMgr.prototype.conScore = function (parent) {
     if (level >= 2) {
       return true;
     }
-    //var maxCombo = that.audioMgr.getCurrentMaxCombo();
+    //var maxCombo = that.episodeMgr.getCurrentMaxCombo();
     //var bestCombo = userScore.getBest("comboUGS");
     //if (bestCombo > maxCombo * 0.6) {
     //  return true;
@@ -54,15 +55,15 @@ SceneMgr.prototype.conScore = function (parent) {
     if (addToParent == undefined) {
       addToParent = true;
     }
-    //if (isEnoughForNextLevel(level) && that.audioMgr.getNextSongName()) {
-    //  if (!Util.isTrialVersion() || !that.audioMgr.isSongOnlyFullVersion(that.audioMgr.getNextSongName())) {
-    //    if (that.userInfo.lock.unlock(that.audioMgr.getNextSongName() + "_" + that.audioMgr.difficulty)) {
-    //      Util.popUpUnlock(that.director, that.audioMgr.getNextSongName(), that.audioMgr.getNextSongName());
+    //if (isEnoughForNextLevel(level) && that.episodeMgr.getNextSongName()) {
+    //  if (!Util.isTrialVersion() || !that.episodeMgr.isSongOnlyFullVersion(that.episodeMgr.getNextSongName())) {
+    //    if (that.userInfo.lock.unlock(that.episodeMgr.getNextSongName() + "_" + that.episodeMgr.difficulty)) {
+    //      Util.popUpUnlock(that.director, that.episodeMgr.getNextSongName(), that.episodeMgr.getNextSongName());
     //    }
     //  }
     //}
 
-    starCon = Util.createStars(that.director, statCount);
+    starCon = Util.createStars(that.director, starCount);
     if (addToParent) {
       starConWrapper.addChild(starCon);
     }
@@ -99,30 +100,15 @@ SceneMgr.prototype.conScore = function (parent) {
   var userExperience = this.userInfo.experience;
   var userLevelText = this.userPanel.userLevelTActor;
 
-  var levelCount;
-
-  function levelUpFun() {
-    levelCount++;
-    userLevelText.setText("Level " + levelCount);
-  }
-
   function resetCurrentLevel() {
-    levelValue = userExperience.getLevel();
+    var levelValue = userExperience.getLevel();
     userLevelText.setText("Level " + levelValue);
     progressBar.actor.emptyBehaviorList();
     progressBar.setPercent(userExperience.getCurrExpPercent());
   }
 
-  function calcMoneyFromScore() {
-    var earned = Math.round(currentScore / 500);
-    if (earned <= 0) {
-      earned = 1;
-    }
-    return earned;
-  }
-
   var currentScore = userEpisodeScore.currentScore;
-  var earnedMoney = calcMoneyFromScore();
+  var earnedMoney = Math.min(1, Math.round(currentScore / 500));
   if (isPlayDead()) {
     currentScore = 0;
     earnedMoney = 0;
@@ -131,7 +117,7 @@ SceneMgr.prototype.conScore = function (parent) {
 
   var rewardCon = null;
   // special for license
-  //if (that.audioMgr.isExam()) {
+  //if (that.episodeMgr.isExam()) {
   //  btnRestart.childrenList[0].setVisible(false);
   //  if (that.gameMgr.isWholeRunEnd) {
 
@@ -156,9 +142,9 @@ SceneMgr.prototype.conScore = function (parent) {
   //}
   //}
 
-  if (!isPlayDead() && !that.audioMgr.isExam()) {
+  if (!isPlayDead() && !episodeMgr.isExam()) {
     // added reward item
-    var itemRewardImage = userEquip.randomAwardItem(1 + that.audioMgr.difficulty / 4 + currentScore / 20000);
+    var itemRewardImage = userEquip.randomAwardItem(1 + episodeMgr.getDifficulty() / 4 + currentScore / 20000);
     if (itemRewardImage) {
       var rewardText = Util.createText("Earned ");
       var rewardImgActor = Util.createImageActorWH(that.director, itemRewardImage, RBS_, RBS_);
@@ -166,12 +152,10 @@ SceneMgr.prototype.conScore = function (parent) {
     }
   }
 
-  var expEarn = currentScore * 4.6 * (1 + that.audioMgr.difficulty * that.audioMgr.difficulty / 2);
-  if (DEBUG_.notRelease) {
-    expEarn *= 1000;
-  }
+  var expEarn = currentScore * 4.6 * (1 + episodeMgr.getDifficulty() * episodeMgr.getDifficulty() / 2);
+  console.log("expEarn=" + expEarn);
 
-// apply talent
+  // apply talent
   var target = {
     expEarn: expEarn,
     gemEarn: earnedMoney,
@@ -181,11 +165,11 @@ SceneMgr.prototype.conScore = function (parent) {
     acc: currentAcc,
     accText: currentAcc.toFixed(1) + ""
   };
-  userEquip.applyTalentEffectEnd(target);
+  //userEquip.applyTalentEffectEnd(target);
   currentScore = target.score;
   var bestScore = userEpisodeScore.getBestScore();
   if (currentScore > bestScore) {
-    userEpisodeScore.setBestScore(currentScore, that.userInfo.facebookInfo.isLoggedIn());
+    //userEpisodeScore.setBestScore(currentScore, that.userInfo.facebookInfo.isLoggedIn());
     textBestScore.setVisible(true);
   } else {
     textBestScore.setVisible(false);
@@ -193,24 +177,34 @@ SceneMgr.prototype.conScore = function (parent) {
   textCurrScore.setText("Score: " + target.scoreText);
   textBestScore.setText("New Best Score");
 
-// show average accuracy of this run
+  // show average accuracy of this run
   textAcc.setText("Accuracy: " + target.accText + "%");
   textMoney.setText("Earned " + target.gemText + " " + GEM_UNIT);
 
-// panel content change
+  // panel content change
   resetCurrentLevel();
   that.userPanel.showInCurrentScene(topCon);
-  userExperience.expChange(parent, target.expEarn, levelUpFun);
 
-// update money
+  var levelCount = userExperience.getLevel();
+
+  function levelUpFunc() {
+    levelCount++;
+    userLevelText.setText("Level " + levelCount);
+  }
+
+  userExperience.expChange(parent, target.expEarn, levelUpFunc);
+
+  // update money
   that.userInfo.money.addGems(earnedMoney);
+  that.userPanel.resetAll(that.userInfo);
 
-// update achievement and best score
+  // update achievement and best score
   if (!isPlayDead()) {
-    that.userInfo.achievement.checkAndUpdate("highScore", currentScore, false);
-    that.userInfo.achievement.checkAndUpdate("highAcc", target.acc, false);
-    if (that.userInfo.score.isAllCombo) {
-      that.userInfo.achievement.checkAndUpdate("achTrueHacker", -target.acc, false);
+    //that.userInfo.achievement.checkAndUpdate("highScore", currentScore, false);
+    //that.userInfo.achievement.checkAndUpdate("highAcc", target.acc, false);
+
+    if (that.userInfo.episodeScore.isAllCombo) {
+      //that.userInfo.achievement.checkAndUpdate("achTrueHacker", -target.acc, false);
     }
   }
 

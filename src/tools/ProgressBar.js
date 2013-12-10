@@ -3,7 +3,6 @@
  * Date: 3/2/13
  * All rights reserved by Africa Swing
  */
-
 function ProgressBar(director) {
   CAAT.ActorContainer.call(this);
   this.director = director;
@@ -43,9 +42,7 @@ ProgressBar.prototype.setMySize = function (w, h) {
   this.bg.setBounds(0, 0, w, h);
   this.setSize(w, h);
   return this;
-
 };
-
 
 ProgressBar.prototype.getLocFromPercent = function (percent) {
   return this.width * ( percent - 1);
@@ -71,7 +68,8 @@ ProgressBar.prototype.incPercent = function (deltaPercent) {
   return percentNew;
 };
 
-ProgressBar.prototype.setPercentAnimation = function (scene, fromPoint, toPoint, levelUpFun) {
+// display with animation
+ProgressBar.prototype.setPercentAnimation = function (scene, fromPoint, toPoint, levelUpFunc) {
   var that = this;
   var currentBehavior = new CAAT.ScaleBehavior().
     setValues(fromPoint, toPoint, 1, 1, 0, 0).
@@ -79,8 +77,8 @@ ProgressBar.prototype.setPercentAnimation = function (scene, fromPoint, toPoint,
       behaviorExpired: function (behavior, time, actor) {
         if (toPoint == 1) {
           that.setPercent(0);
-          if (levelUpFun !== undefined) {
-            levelUpFun();
+          if (levelUpFunc !== undefined) {
+            levelUpFunc();
           }
         }
         if (behavior == that.lastBehavior) {
@@ -103,9 +101,7 @@ ProgressBar.prototype.setPercentAnimation = function (scene, fromPoint, toPoint,
   }
 
   that.lastBehavior = currentBehavior;
-
 };
-
 
 // image with progress on percent
 function ImageProgressCon(imageActor_) {
