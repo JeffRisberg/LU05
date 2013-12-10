@@ -2,11 +2,11 @@
 function EpisodeActor(episodeInfo) {
     var that = this;
 
-    CAAT.ActorContainer.call(this);
+    CAAT.Actor.call(this);
 
     console.log(episodeInfo.name)
 
     return this;
 }
 
-EpisodeActor.prototype = new CAAT.ActorContainer();
+EpisodeActor.prototype = new CAAT.Actor();
