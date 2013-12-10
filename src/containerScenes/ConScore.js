@@ -167,9 +167,9 @@ SceneMgr.prototype.conScore = function (parent) {
   };
   //userEquip.applyTalentEffectEnd(target);
   currentScore = target.score;
-  var bestScore = userEpisodeScore.getBestScore();
+  var bestScore = userEpisodeScore.getCurrBestScore();
   if (currentScore > bestScore) {
-    //userEpisodeScore.setBestScore(currentScore, that.userInfo.facebookInfo.isLoggedIn());
+    userEpisodeScore.setCurrBestScore(currentScore);
     textBestScore.setVisible(true);
   } else {
     textBestScore.setVisible(false);

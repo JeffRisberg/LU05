@@ -49,11 +49,10 @@ function UserEpisodeScore(episodeMgr) {
     bestCurrPathSuffix_ = getPathSuffixNoType(currEpisodeInfo_.name, currEpisodeDifficulty_);
   };
 
-  this.setCurrBestScore = function (value, loggedIn) {
+  this.setCurrBestScore = function (value) {
     setCurrEpisodeValue(value, bestScoreSuffix_);
-    if (true || loggedIn) {
-      Backend.checkAndUpdateHighScore(this.userId, currEpisodeInfo_, value);
-    }
+
+    // Backend.checkAndUpdateHighScore(this.userId, currEpisodeInfo_, value);
   };
 
   this.getCurrBestScore = function () {
@@ -152,23 +151,22 @@ function UserEpisodeScore(episodeMgr) {
     return parseInt(that.getValue(bestCurrPathSuffix_ + "_" + type)) || 0;
   }
 
+  // called during reset operations.  In this case we don't set currEpisode
   function setEpisodeValue(value, episodeInfo, difficulty, type) {
     that.setValue(value, getPathFull(episodeInfo.name, difficulty, type));
   }
 
+  // called during reset operations.  In this case we don't set currEpisode
   function getEpisodeValue(episodeInfo, difficulty, type) {
-    //return parseInt(that.getValue(getPathFull(episodeInfo.name, difficulty, type))) || 0;
-    return 0;
-  }
-
-  function getPathSuffixNoType(episodeInfo, difficulty) {
-    //return (episodeInfo.name + "_" + difficulty);
-    return 0;
+    return parseInt(that.getValue(getPathFull(episodeInfo.name, difficulty, type))) || 0;
   }
 
   function getPathFull(episodeInfo, difficulty, type) {
-    //return getPathSuffixNoType(episodeInfo, difficulty) + "_" + type;
-    return 0;
+    return getPathSuffixNoType(episodeInfo, difficulty) + "_" + type;
+  }
+
+  function getPathSuffixNoType(episodeInfo, difficulty) {
+    return (episodeInfo.name + "_" + difficulty);
   }
 }
 

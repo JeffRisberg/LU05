@@ -30,7 +30,7 @@ LocalStorageMgr.prototype.getPath = function () {
 LocalStorageMgr.prototype.setValue = function (value, item) {
   item = item || "";
   if (DEBUG_.userAtt) {
-    console.error("set " + this.getPath() + item + " : " + value);
+    console.log("set " + this.getPath() + item + " : " + value);
   }
   localStorage.setItem(this.getPath() + item, value);
 };

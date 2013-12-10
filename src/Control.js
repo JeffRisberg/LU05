@@ -13,7 +13,7 @@ window['DEBUG_'] = {
   path: 0,
   grid: 0,
   userAtt: 1,
-  episodeMgr: 0,
+  episodeMgr: 1,
   episodeInfo: 1,
   leaderboardMgr: 0,
   additionalButton: 1,

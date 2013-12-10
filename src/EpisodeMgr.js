@@ -90,7 +90,7 @@ function EpisodeMgr() {
 
   this.setIndex = function (episodeName) {
     if (DEBUG_.episodeMgr) {
-      console.log("New Episode Index " + episodeName);
+      console.log("New Episode Name " + episodeName);
     }
     currentEpisodeName_ = episodeName;
     currentEpisodeInfo_ = episodeInfo_[episodeName];

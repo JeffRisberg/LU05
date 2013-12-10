@@ -76,13 +76,16 @@ SceneMgr.prototype.addScenePlay = function (sceneName) {
 
     function onClick(button) {
       var episodeInfo = button.source.getEpisodeInfo();
-
       console.log(episodeInfo);
+
+      that.episodeMgr.setIndex(episodeInfo.name);
 
       // the lines below generate random values based on episode parameters
       var avgScore = episodeInfo.avgGain;
       var score = Math.floor(avgScore * (0.8 + Math.random() * 0.4));
       console.log("score=", score);
+
+      that.userEpisodeScore.setEpisode(episodeInfo, that.episodeMgr.getDifficulty());
 
       that.userEpisodeScore.currentScore = score;
       that.userEpisodeScore.accAdded = 100 * Math.random();
