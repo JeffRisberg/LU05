@@ -90,10 +90,10 @@ SceneMgr.prototype.conScore = function (parent) {
   }
 
   // score text
-  var textAcc = Util.createText("Accuracy:  0.0%");
-  var textCurrScore = Util.createText("dummy");
-  var textBestScore = Util.createText("dummy");
-  var textMoney = Util.createText("Earned 1000 (+20%) carrots");
+  var textAcc = Util.createText("Accuracy:  0.0%", 25 * sf);
+  var textCurrScore = Util.createText("dummy", 40 * sf);
+  var textBestScore = Util.createText("dummy", 25 * sf);
+  var textMoney = Util.createText("Earned 1000 (+20%) carrots", 25 * sf);
 
   // for panel
   var progressBar = this.userPanel.progressBar;
@@ -146,9 +146,12 @@ SceneMgr.prototype.conScore = function (parent) {
     // added reward item
     var itemRewardImage = userEquip.randomAwardItem(1 + episodeMgr.getDifficulty() / 4 + currentScore / 20000);
     if (itemRewardImage) {
-      var rewardText = Util.createText("Earned ");
+      var rewardText = Util.createText("Bonus ", 40 * sf);
+
       var rewardImgActor = Util.createImageActorWH(that.director, itemRewardImage, RBS_, RBS_);
-      rewardCon = Util.createAlignContainerWithActor(HORIZONTAL, [rewardText, rewardImgActor], 0);
+
+       rewardCon = Util.createAlignContainerWithActor(VERTICAL, [rewardText, rewardImgActor], 0);
+
     }
   }
 
@@ -215,9 +218,10 @@ SceneMgr.prototype.conScore = function (parent) {
   //userEpisodeScore.checkAndSetCurrSongStar(starCount);
 
   // layout
+
   var scoreTextCon = Util.createAlignContainerWithActor(true,
-    [textAcc, textCurrScore, textBestScore, textMoney, rewardCon]);
-  var scoreCon = Util.createAlignContainerWithActor(VERTICAL, [starConWrapper, scoreTextCon]);
+    [textCurrScore, textAcc, textBestScore, textMoney]);
+  var scoreCon = Util.createAlignContainerWithActor(false, [starConWrapper, scoreTextCon, rewardCon], 70);
 
   scoreCon.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
   bgContainer.addChild(scoreCon);
