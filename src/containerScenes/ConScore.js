@@ -221,5 +221,6 @@ SceneMgr.prototype.conScore = function (parent) {
 
   scoreCon.centerAt(bgContainer.width * 0.45, bgContainer.height * 0.6);
   bgContainer.addChild(scoreCon);
+
   return topCon;
 };
