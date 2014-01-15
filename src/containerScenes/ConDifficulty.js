@@ -97,7 +97,6 @@ SceneMgr.prototype.conDifficulty = function (parent) {
 };
 
 SceneMgr.prototype.conLicense = function (parent, actor) {
-//general
   var that = this;
   var topCon = that.createConBG();
   var userLicense = that.userInfo.license;

@@ -21,7 +21,6 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
   var currentSelection = talentGroup[0];
   var picSize = 125 * sf;
 
-
   // slider and add item
   var scaleFactor = 1.5;
   var slider = new Slider(topCon, that.director);
@@ -138,7 +137,6 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
   slider.setTouchy();
   slider.innerContainer.childrenList[0].pressDo();
   return topCon;
-
 };
 
 SceneMgr.prototype.conItem = function (parent, actor) {
@@ -280,7 +278,7 @@ SceneMgr.prototype.conItem = function (parent, actor) {
 
     equipBtn = Util.createButtonWithImageFunWH(that.director, "equipBtn", equipButtonDo, buttonL, buttonW);
 
-    // un#quip
+    // unequip
     function unEquipButtonDo() {
       Util.changeActorImg(that.director, actor, "talentBox");
       userEquip.setValue("", actor.buttonGroup);
@@ -313,5 +311,4 @@ SceneMgr.prototype.conItem = function (parent, actor) {
   slider.setTouchy();
   slider.innerContainer.childrenList[0].pressDo();
   return topCon;
-
 };

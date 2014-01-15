@@ -122,7 +122,6 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
         Util.destroyActor(lockActor);
         btnSelect.setVisible(true);
         lockMgr.setGroupIsUnlockOrNum(groupName, 1);
-
       }
 
       function btnCancelDo() {
@@ -204,7 +203,6 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
       if (currentIndex != userCharacter.getEquippedIndex()) {
         checkMark.setVisible(false);
         btnSelect.setVisible(true);
-
       } else {
         checkMark.setVisible(true);
         btnSelect.setVisible(false);
@@ -235,5 +233,4 @@ SceneMgr.prototype.addSceneShop = function (sceneName) {
   scene.backFromCon = function () {
     that.userPanel.showInCurrentScene(scene);
   }
-
 };
