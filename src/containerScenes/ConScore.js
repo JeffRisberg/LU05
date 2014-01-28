@@ -146,7 +146,7 @@ SceneMgr.prototype.conScore = function (parent) {
     // added reward item
     var itemRewardImage = userEquip.randomAwardItem(1 + episodeMgr.getDifficulty() / 4 + currentScore / 20000);
     if (itemRewardImage) {
-      var rewardText = Util.createText("Bonus ", 40 * sf);
+      var rewardText = Util.createText("Bonus", 40 * sf);
 
       var rewardImgActor = Util.createImageActorWH(that.director, itemRewardImage, RBS_, RBS_);
 

@@ -13,7 +13,7 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
   }
 
   that.userPanel.showInCurrentScene(topCon);
-  var conBg = Util.createImageConInBound(that.director, "bgContainer", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
+  var conBg = Util.createImageConInBound(that.director, "containerBg", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
   topCon.addChild(conBg);
 
   var talentGroup = userEquip.getTalentGroup();
@@ -45,7 +45,7 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
     function pressDoUnlock() {
       pressDoCommon();
       buyBtn.setVisible(false);
-      if (userEquip.getValue(actor.buttonGroup) == itemInfo.image) {
+      if (userEquip.getValue(actor.buttonGroup) == itemInfo.name) {
         // current selection is already equipped
         unEquipBtn.setVisible(true);
         equipBtn.setVisible(false);
@@ -68,14 +68,18 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
     }
 
     function buttonUnlockedDoEachActor() {
+
+
       if (itemActorCon.tryUnlockSuccess()) {
+          // call the api when pressed each item
+        Backend.buy(currentSelection.id);
         that.userPanel.resetAll(that.userInfo);
         pressDoUnlock();
       }
     }
 
-    var lockImg = itemInfo.image + "Off";
-    var itemActorCon = new LockActor(that.director, itemInfo.image, pressDoUnlock, lockMgr, true, lockImg)
+    var lockImg = itemInfo.name + "Off";
+    var itemActorCon = new LockActor(that.director, itemInfo.name, pressDoUnlock, lockMgr, true, lockImg)
       .setSlider(slider)
       .setPressDoScaleFactor(scaleFactor)
       .setSizeMy(picSize, picSize)
@@ -83,7 +87,7 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
       .setPrice(itemInfo.price, that.userInfo.money);
 
     slider.addItem(itemActorCon);
-    var lockSt = !lockMgr.getGroupIsUnlockOrNum(itemInfo.image);
+    var lockSt = !lockMgr.getGroupIsUnlockOrNum(itemInfo.name);
     itemActorCon.setLocked(lockSt);
   }
 
@@ -94,15 +98,16 @@ SceneMgr.prototype.conTalent = function (parent, actor) {
     var buttonW = RBS_ * 0.6;
 
     function buyButtonDo() {
-      // change when pressed each item
+
+
     }
 
     buyBtn = Util.createButtonWithImageFunWH(that.director, "buyBtn", buyButtonDo, buttonL, buttonW);
 
     // equip, record it , then return to scene
     function equipButtonDo() {
-      Util.changeActorImg(that.director, actor, currentSelection.image);
-      userEquip.setValue(currentSelection.image, actor.buttonGroup);
+      Util.changeActorImg(that.director, actor, currentSelection.name);
+      userEquip.setValue(currentSelection.name, actor.buttonGroup);
       returnDo();
     }
 
@@ -153,7 +158,7 @@ SceneMgr.prototype.conItem = function (parent, actor) {
   }
 
   that.userPanel.showInCurrentScene(topCon);
-  var conBg = Util.createImageConInBound(that.director, "bgContainer", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
+  var conBg = Util.createImageConInBound(that.director, "containerBg", 0.1 * W_, 0.2 * H_, W_ * 0.8, H_ * 0.8);
   topCon.addChild(conBg);
 
   var itemGroup = userEquip.getItemGroup();
@@ -179,11 +184,12 @@ SceneMgr.prototype.conItem = function (parent, actor) {
   function createOneItem(itemInfo) {
 
     function changeItemCountForActor() {
-      var group = itemInfo.image;
+      var group = itemInfo.name;
       var oriOwn = parseInt(lockMgr.getGroupIsUnlockOrNum(group)) || 0;
       if (oriOwn == 0) {
         return;
       }
+
       itemCountActor.setText(oriOwn + "");
     }
 
@@ -196,13 +202,13 @@ SceneMgr.prototype.conItem = function (parent, actor) {
       pressDoCommon();
       buyBtn.setVisible(true);
       warningText.setVisible(false);
-      if (userEquip.getValue(actor.buttonGroup) == itemInfo.image) {
+      if (userEquip.getValue(actor.buttonGroup) == itemInfo.name) {
         // current selection is already equipped
         unEquipBtn.setVisible(true);
         equipBtn.setVisible(false);
         // warningText.setVisible(false);
       } else {
-        if (!userEquip.getIsEquip(itemInfo.image)) {
+        if (!userEquip.getIsEquip(itemInfo.name)) {
           equipBtn.setVisible(true);
           //  warningText.setVisible(false);
         } else {
@@ -228,9 +234,12 @@ SceneMgr.prototype.conItem = function (parent, actor) {
     }
 
     function buttonUnlockedDoEachActor() {
-      var group = currentSelection.image;
+
+      var group = currentSelection.name;
       var oriOwn = parseInt(lockMgr.getGroupIsUnlockOrNum(group)) || 0;
       if (itemActorCon.tryUnlockSuccess()) {
+        //call the api when buy button is pressed
+        Backend.buy(currentSelection.id);
         that.userPanel.resetAll(that.userInfo);
         pressDoUnlock();
         lockMgr.setGroupIsUnlockOrNum(group, oriOwn + 1);
@@ -238,8 +247,8 @@ SceneMgr.prototype.conItem = function (parent, actor) {
       changeItemCountForActor();
     }
 
-    var lockImg = itemInfo.image;
-    var itemActorCon = new LockActor(that.director, itemInfo.image, pressDoUnlock, lockMgr, true, lockImg)
+    var lockImg = itemInfo.name;
+    var itemActorCon = new LockActor(that.director, itemInfo.name, pressDoUnlock, lockMgr, true, lockImg)
       .setSlider(slider)
       .setPressDoScaleFactor(scaleFactor)
       .setSizeMy(picSize, picSize)
@@ -252,7 +261,7 @@ SceneMgr.prototype.conItem = function (parent, actor) {
     changeItemCountForActor();
 
     slider.addItem(itemActorCon);
-    var unLockSt = lockMgr.getGroupIsUnlockOrNum(itemInfo.image);
+    var unLockSt = lockMgr.getGroupIsUnlockOrNum(itemInfo.name);
     itemActorCon.setUnlocked(unLockSt);
   }
 
@@ -263,22 +272,24 @@ SceneMgr.prototype.conItem = function (parent, actor) {
     var buttonW = RBS_ * 0.6;
 
     function buyButtonDo() {
-      // place holder
-      // change when pressed each item
+
+        // call the api pressed each item
+
+
     }
 
     buyBtn = Util.createButtonWithImageFunWH(that.director, "buyBtn", buyButtonDo, buttonL, buttonW);
 
     // equip, record it , then return to scene
     function equipButtonDo() {
-      Util.changeActorImg(that.director, actor, currentSelection.image);
-      userEquip.setValue(currentSelection.image, actor.buttonGroup);
+      Util.changeActorImg(that.director, actor, currentSelection.name);
+      userEquip.setValue(currentSelection.name, actor.buttonGroup);
       returnDo();
     }
 
     equipBtn = Util.createButtonWithImageFunWH(that.director, "equipBtn", equipButtonDo, buttonL, buttonW);
 
-    // unequip
+    // un#quip
     function unEquipButtonDo() {
       Util.changeActorImg(that.director, actor, "talentBox");
       userEquip.setValue("", actor.buttonGroup);

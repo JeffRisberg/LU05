@@ -25,3 +25,4 @@ window['DEBUG_'] = {
 window['ABC_'] = 0;
 window['MF_'] = ".ogg";
 window['IS_AD_ON_'] = 1;
+window['BACKEND_ENV'] = "prod";//dev or prod
